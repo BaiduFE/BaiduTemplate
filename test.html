@@ -10,14 +10,13 @@
 <body>
 
 
-<!-- 测试模板d开始 -->
+<!-- 模板1开始 -->
 <script id="t:_1234-abcd-1" type="text/html">
 
 <div>
 	<%*  这里可以任意的注释*%>
 	<!-- 这样也可以注释 -->
 	<h1><%=title%></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘’‘’‘ 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
 	<h1><%=wang%></h1>
 	<%var testValue='<script';%>
 	<%var testNull%>
@@ -42,16 +41,15 @@
 <%function testfunction(){return 'testfunction running'}%>
 <%=testfunction()%>
 </script>
-<!-- 测试模板1结束 -->
+<!-- 模板1结束 -->
 
-<!-- 测试模板2开始 -->
+<!-- 模板2开始 -->
 <script id="t:_1234-abcd-2" type="text/html">
 
 <div>
 	<#*  这里可以任意的注释*#>
 	<!-- 这样也可以注释 -->
 	<h1><#=title#></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘’‘’‘ 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
 	<h1><#=wang#></h1>
 	<#var testValue='<script';#>
 	<#var testNull#>
@@ -76,17 +74,16 @@
 <#function testfunction(){return 'testfunction running'}#>
 <#=testfunction()#>
 </script>
-<!-- 测试模板2结束 -->
+<!-- 模板2结束 -->
 
 
-<!-- 测试模板3开始 -->
+<!-- 模板3开始 -->
 <script id="t:_1234-abcd-3" type="text/html">
 
 <div>
 	<?*  这里可以任意的注释*?>
 	<!-- 这样也可以注释 -->
 	<h1><?=title?></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘’‘’‘ 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
 	<h1><?=wang?></h1>
 	<?var testValue='<script';?>
 	<?var testNull?>
@@ -111,44 +108,8 @@
 <?function testfunction(){return 'testfunction running'}?>
 <?=testfunction()?>
 </script>
-<!-- 测试模板3结束 -->
+<!-- 模板3结束 -->
 
-<!-- 测试模板4开始 -->
-<textarea id='t:_1234-abcd-4' style='display:none;'>
-<div>
-	<!*  这里可以任意的注释*!>
-	<!-- 这样也可以注释 -->
-	<h1><!=title!></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘‘’‘'' 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
-	<h1><!=wang!></h1>
-	<!var testValue='<script';!>
-	<!var testNull!>
-	testValue:<!=testValue!>
-</div>
-<div>
-<!if(list.length=5) { !>
-	<h2><!=list[4]!></h2>
-<!}else{!>
-	我
-<!}!>
-<ul>
-	<!for(var i=0;i<list.length;i++)!>
-	<!{!>
-		<li><!=list[i]!></li>
-	<!}!>
-</ul>
-</div>
-<!for(var i=0;i<10;i++){!>
-	<!=i!>
-<!}!>
-<!function testfunction(){return 'testfunction running'}!>
-<!=testfunction()!>
-</textarea>
-<!-- 测试模板4结束 -->
-
-<!-- 测试模板5开始 -->
-<textarea id='t:_1234-abcd-5' style='display:none;'>t:_1234-abcd-5</textarea>
-<!-- 测试模板5结束 -->
 
 <div id="results"></div>
 
@@ -160,19 +121,15 @@
 			"list":['test1<script>','test2','test3','test4','test5'],
 			"what":'wangxiao'
 		};
-		//console.log('data:'+data);
+		console.log('data:'+data);
 		var bat=baidu.template;
-		//设置分隔符
-		bat.LEFT_DELIMITER='<!';
-		bat.RIGHT_DELIMITER='!>';
-		//console.log(bat('t:_1234-abcd-4'));
-		//var fun = bat('t:_1234-abcd-4');
-		//var html=fun(data);
-		var html=bat('t:_1234-abcd-4',data);
-		//console.log('html'+html);
+		bat.LEFT_DELIMITER='<#';
+		bat.RIGHT_DELIMITER='#>';
+		console.log(bat('t:_1234-abcd-2'));
+		var html=bat('t:_1234-abcd-2',data);
+		console.log('html'+html);
 		document.getElementById('results').innerHTML=html;
 	}
 </script>
-
 </body>
 </html>
