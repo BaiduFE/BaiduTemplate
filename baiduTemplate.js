@@ -5,7 +5,7 @@
     baidu.template(tpl,data); //return html string
 */
 
-;(function(){
+(function(){
 
     //模板函数
     var bt = function(str, data){
