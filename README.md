@@ -48,6 +48,10 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 ####baiduTemplate占用baidu.template命名空间
 	var bt = baidu.template;
 
+####可以设置分隔符，默认为 <% %>
+	bt.LEFT_DELIMITER='<!';
+	bt.RIGHT_DELIMITER='!>';
+
 ####tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段
 	var html0 = bt(tpl,data);
 
