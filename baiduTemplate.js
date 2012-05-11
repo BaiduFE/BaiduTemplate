@@ -3,19 +3,14 @@
     接口调用方式如下
     baidu.template(tpl);  //return function
     baidu.template(tpl,data); //return html string
+    @author  wangxiao 
+    @email  1988wangxiao@gmail.com
 */
 
 ;(function(){
 
     //模板函数
     var bt = function(str, data){
-
-        //将字符串拼接生成函数，即编译过程(compile)
-        var compile = function(str){
-            return new Function("_template_object",
-                "var _template_fun_array=[];"+"with(_template_object){_template_fun_array.push('"+analysisStr(str)+"');}return _template_fun_array.join('');"
-            );
-        };
 
         //检查是否有不是字母、-、：、.、的字符  即，检查是否是模板   W3C文档中规定，id的名字可由 字母 数字 冒号 横线 下划线 等组成
         var fn = !/[^\w-:.]/.test(str) ?
@@ -26,14 +21,14 @@
                 var ele=document.getElementById(str);
                 var html='';
                 
-                //支持textarea情况  textarea则取value
-                if(ele && ele.tagName.toLowerCase() === "textarea"){
+                //支持textarea情况  textarea或者input则取value
+                if(ele && /^(textarea|input)$/i.test(ele.tagName)){
                     html=ele.value;
                 }else{
                     html=ele.innerHTML;
                 };
-                 
-                 //支持模板和id完全相同
+                
+                //支持模板和id完全相同
                 return compile(html);
             })() : 
 
@@ -84,6 +79,13 @@
             .replace(/\//g,'\/')
             .replace(/\n/g,'\n')
             .replace(/\r/g,'\r');
+    };
+
+    //将字符串拼接生成函数，即编译过程(compile)
+    var compile = function(str){
+        return new Function("_template_object",
+            "var _template_fun_array=[];"+"with(_template_object){_template_fun_array.push('"+analysisStr(str)+"');}return _template_fun_array.join('');"
+        );
     };
 
     //解析模板字符串
