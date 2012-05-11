@@ -19,14 +19,13 @@
 ###1、存放：
 	模板块可以放在 <script> 中，设置type属性为text/html，用id标识
 		如： 
-	
 			<script id='tpl' type="text/html">
 			<!-- 模板部分 -->
 
 			<!-- 模板结束 -->	
 			</script>
 
-		或者存放在<textarea>中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
+	或者存放在<textarea>中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
 
 			<textarea id='tpl'>
 			<!-- 模板部分 -->
@@ -34,9 +33,13 @@
 			<!-- 模板结束 -->	
 			</textarea>
 
-	2、调用
+###2、调用
+
+####baiduTemplate占用baidu.template命名空间
 	var bt = baidu.template;
-	var fun = bt(tpl,data);  //tpl可以是id，可以是模板片段的字符串
+
+####tpl为传入的模板，可以是id，可以是模板片段的字符串，当前模板和数据返回的HTML
+	var html = bt(tpl,data);
 
 
 ##三、使用举例
