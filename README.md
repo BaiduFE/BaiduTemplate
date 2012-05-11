@@ -4,7 +4,7 @@
 ##一、baiduTemplate 简介
 
 ###应用场景：
-####前端使用的模板系统  或  后端Javascript环境发布页面
+	前端使用的模板系统  或  后端Javascript环境发布页面
 
 ###功能概述：
 	提供一套模板语法，用户可以写一个模板区块，每次根据传入的数据，生成对应数据产生的HTML片段，渲染不同的效果。
@@ -17,15 +17,15 @@
 
 ##二、基本用法
 ###1、存放：
-	模板块可以放在 <script> 中，设置type属性为text/html，用id标识
-		如： 
+####模板块可以放在 <script> 中，设置type属性为text/html，用id标识
+####如： 
 			<script id='tpl' type="text/html">
 			<!-- 模板部分 -->
 
 			<!-- 模板结束 -->	
 			</script>
 
-	或者存放在<textarea>中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
+####或者存放在<textarea>中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
 
 			<textarea id='tpl'>
 			<!-- 模板部分 -->
@@ -35,7 +35,7 @@
 
 ###2、调用
 
-####baiduTemplate占用baidu.template命名空间
+baiduTemplate占用baidu.template命名空间
 	var bt = baidu.template;
 
 ####tpl为传入的模板，可以是id，可以是模板片段的字符串，当前模板和数据返回的HTML
