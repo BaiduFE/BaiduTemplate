@@ -1,10 +1,10 @@
-/*
-    占用命名空间  baidu.template
-    接口调用方式如下
-    baidu.template(tpl);  //return function
-    baidu.template(tpl,data); //return html string
-    @author  wangxiao 
-    @email  1988wangxiao@gmail.com
+/**
+*占用命名空间  baidu.template
+*@param str {String|HtmlElement} dom结点ID,dom，或者模板string
+*@param data {Object} 需要渲染的json对象，可以为空。
+*@return 如果无data，直接返回函数，如果有data，返回html.
+*@author  wangxiao 
+*@email  1988wangxiao@gmail.com
 */
 
 ;(function(){

@@ -21,7 +21,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 
 ###1、放置模板片段：
 
-####模板块可以放在 &lt;script&gt; 中，设置type属性为text/html，用id标识，如：
+####页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/html，用id标识，如：
 
 	<script id='tpl' type="text/template">
 	<!-- 模板部分 -->
@@ -36,6 +36,10 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 
 	<!-- 模板结束 -->	
 	</textarea>
+
+####模板也可以直接存储在一个变量中
+
+	var tpl = "<!-- 模板 -->";
 
 ###2、调用引擎方式
 
@@ -52,14 +56,17 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	var bt = baidu.template;
 
 ####tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段
+
 	var html0 = baidu.template(tpl,data);
 
 ####或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段
+
 	var fun = baidu.template(tpl);
 	var html1 = fun(data1);
 	var html2 = fun(data2);
 
 ####最后将他们插入到一个容器中即可
+
 	document.getElementById('result0').innerHTML=html0;
 	document.getElementById('result1').innerHTML=html1;
 	document.getElementById('result2').innerHTML=html2;
@@ -67,6 +74,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 ###3、模板基本语法（默认分隔符为<% %>，也可以自定义）
 
 ####分隔符内语句为js语法，如：
+
 	<% var test = function(){
 		//函数体
 	};
@@ -77,6 +85,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	%>
 
 ####假定事先设置数据为
+
 	var data={
 		title:'baiduTemplate',
 		list:['test1<script>','test2','test3']
@@ -90,16 +99,19 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	//不转义
 	<%:=title%> 或 <%-title%>
 
-	//URL转义
+	//URL转义，UI变量使用在模板链接地址URL的参数中时需要转义
 	<%:u=title%>
 
-	//标签转义
+	//UI变量使用在HTML页面标签onclick等事件函数参数中需要转义
+	//“<”转成“&lt;”、“>”转成“&gt;”、“&”转成“&amp;”、“'”转成“\&#39;”、“"”转成“\&quot;”、“\”转成“\\”、“/”转成“\/”、\n转成“\n”、\r转成“\r”
+	
 	<%:v=title%>
 
 	//HTML转义（默认自动）
 	<%=title%> 或 <%:h=title%>
 
 ####判断语句
+
 	<%if(list.length){%>
 		<h2>list.length</h2>
 	<%}else{%
@@ -107,6 +119,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	<%}%>
 
 ####循环语句
+
 	<%for(var i=0;i<list.length;i++){%>
 			<li><%=list[i]%></li>
 	<%}%>
