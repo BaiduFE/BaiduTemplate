@@ -25,7 +25,7 @@
 	<!-- 模板结束 -->	
 	</script>
 
-	或者存放在<textarea>中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
+####或者存放在 &lt;textarea&amp; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
 
 	<textarea id='tpl'>
 	<!-- 模板部分 -->
