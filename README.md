@@ -35,7 +35,7 @@
 
 ###2、调用
 
-baiduTemplate占用baidu.template命名空间
+####baiduTemplate占用baidu.template命名空间
 	var bt = baidu.template;
 
 ####tpl为传入的模板，可以是id，可以是模板片段的字符串，当前模板和数据返回的HTML
