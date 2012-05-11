@@ -17,7 +17,7 @@
 
 ##二、基本用法
 ###1、存放：
-	模板块可以放在 <script> 中，设置type属性为text/html，用id标识如：
+####模板块可以放在 &lt;script&amp; 中，设置type属性为text/html，用id标识如：
 
 	<script id='tpl' type="text/html">
 	<!-- 模板部分 -->
