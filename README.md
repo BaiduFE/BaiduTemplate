@@ -16,8 +16,10 @@
 	3、功能强大，如分隔符可自定等多种功能；
 
 ##二、基本用法
+
 ###1、存放：
-####模板块可以放在 &lt;script&amp; 中，设置type属性为text/html，用id标识如：
+
+####模板块可以放在 &lt;script&amp; 中，设置type属性为text/html，用id标识，如：
 
 	<script id='tpl' type="text/html">
 	<!-- 模板部分 -->
@@ -25,7 +27,7 @@
 	<!-- 模板结束 -->	
 	</script>
 
-####或者存放在 &lt;textarea&amp; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
+####或者存放在 &lt;textarea&amp; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识，如：
 
 	<textarea id='tpl'>
 	<!-- 模板部分 -->
@@ -35,12 +37,34 @@
 
 ###2、调用
 
+####数据结构是一个JSON，如：
+	var data={
+		title:'baiduTemplate',
+		list:['test1','test2','test3']
+	}
+
 ####baiduTemplate占用baidu.template命名空间
 	var bt = baidu.template;
 
-####tpl为传入的模板，可以是id，可以是模板片段的字符串，当前模板和数据返回的HTML
-	var html = bt(tpl,data);
+####tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段
+	var html0 = bt(tpl,data);
 
+####或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段
+	var fun = bt(tpl);
+	var html1 = fun(data1);
+	var html2 = fun(data2);
+
+####最后将他们插入到一个容器中即可
+	document.getElementById('result0').innerHTML=html0;
+	document.getElementById('result1').innerHTML=html1;
+	document.getElementById('result2').innerHTML=html2;
+
+###3、基本语法（默认分隔符为<% %>，也可以自定义）
+
+####输出一个变量
+	<%=value%>
+
+####
 
 ##三、使用举例
 
