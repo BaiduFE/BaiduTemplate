@@ -19,7 +19,7 @@
 
 ###1、存放：
 
-####模板块可以放在 &lt;script&amp; 中，设置type属性为text/html，用id标识，如：
+####模板块可以放在 &lt;script&gt; 中，设置type属性为text/html，用id标识，如：
 
 	<script id='tpl' type="text/html">
 	<!-- 模板部分 -->
@@ -27,7 +27,7 @@
 	<!-- 模板结束 -->	
 	</script>
 
-####或者存放在 &lt;textarea&amp; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识，如：
+####或者存放在 &lt;textarea&gt; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识，如：
 
 	<textarea id='tpl'>
 	<!-- 模板部分 -->
