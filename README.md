@@ -71,7 +71,11 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	<% var test = function(){
 		//函数体
 	};
-	if(1){}else{}; %>
+	if(1){}else{};
+	function testFun(){
+		return;
+	};
+	%>
 
 ####假定事先设置数据为
 	var data={
