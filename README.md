@@ -19,11 +19,11 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 
 ##二、基本用法
 
-###1、存放：
+###1、放置模板片段：
 
 ####模板块可以放在 &lt;script&gt; 中，设置type属性为text/html，用id标识，如：
 
-	<script id='tpl' type="text/html">
+	<script id='tpl' type="text/template">
 	<!-- 模板部分 -->
 
 	<!-- 模板结束 -->	
@@ -37,26 +37,25 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	<!-- 模板结束 -->	
 	</textarea>
 
-###2、调用
+###2、调用引擎方式
 
 ####数据结构是一个JSON，如：
+
 	var data={
 		title:'baiduTemplate',
 		list:['test1','test2','test3']
 	}
 
 ####baiduTemplate占用baidu.template命名空间
+
+	//可以付值给一个短名变量使用
 	var bt = baidu.template;
 
-####可以设置分隔符，默认为 <% %>
-	bt.LEFT_DELIMITER='<!';
-	bt.RIGHT_DELIMITER='!>';
-
 ####tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段
-	var html0 = bt(tpl,data);
+	var html0 = baidu.template(tpl,data);
 
 ####或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段
-	var fun = bt(tpl);
+	var fun = baidu.template(tpl);
 	var html1 = fun(data1);
 	var html2 = fun(data2);
 
@@ -65,7 +64,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	document.getElementById('result1').innerHTML=html1;
 	document.getElementById('result2').innerHTML=html2;
 
-###3、基本语法（默认分隔符为<% %>，也可以自定义）
+###3、模板基本语法（默认分隔符为<% %>，也可以自定义）
 
 ####分隔符内语句为js语法，如：
 	<% var test = function(){
@@ -111,6 +110,17 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	<%for(var i=0;i<list.length;i++){%>
 			<li><%=list[i]%></li>
 	<%}%>
+
+###4、不推荐使用功能
+
+####用户可以自定义分隔符，默认为 <% %>，如：
+	
+	//设置左分隔符为 <!
+	baidu.template.LEFT_DELIMITER='<!';
+
+	//设置左分隔符为 <!	
+	baidu.template.RIGHT_DELIMITER='!>';
+
 
 ##三、使用举例
 
