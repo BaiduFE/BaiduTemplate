@@ -106,6 +106,9 @@
                 return $1 ? $1.replace(/\\/g,"&#92;").replace(/'/g,'&#39;') : item ;
             })
 
+            //去掉js注释
+            .replace(new RegExp("\\/\\/.*?\\n","g"), "")
+
             //把所有换行去掉  \r回车符 \t制表符 \n换行符
             .replace(new RegExp("[\\r\\t\\n]","g"), "")
 

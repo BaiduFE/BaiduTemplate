@@ -61,10 +61,37 @@
 
 ###3、基本语法（默认分隔符为<% %>，也可以自定义）
 
-####输出一个变量
-	<%=value%>
+####分隔符内语句为js语法，如：
+	<% var test = function(){
+		//函数体
+	};
+	if(1){}else{}; %>
 
-####
+####假定事先设置数据为
+	var data={
+		title:'baiduTemplate',
+		list:['test1<script>','test2','test3']
+	}	
+
+####输出一个变量
+
+	//默认HTML转义，如果变量未定义输出为空
+	<%=title%>
+
+	//不转义
+	<%:=title%> 或 <%-title%>
+
+####判断语句
+	<%if(list.length){%>
+		<h2>list.length</h2>
+	<%}else{%
+		<h2>list长度为0<h2>
+	<%}%>
+
+####循环语句
+	<%for(var i=0;i<list.length;i++){%>
+			<li><%=list[i]%></li>
+	<%}%>
 
 ##三、使用举例
 
