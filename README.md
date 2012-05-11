@@ -17,64 +17,64 @@
 
 二、使用举例
 
-//index.html
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8"/>
-<title>test</title>
-<!-- 引入baiduTemplate -->
-<script type="text/javascript" src="./baiduTemplate.js"></script>
-</head>
-<body>
-<div id='result'></div>
-<!-- 模板1开始，可以使用script（type设置为text/html）来存放模板片段，并且用id标示 -->
-<script id="t:_1234-abcd-1" type="text/html">
-<div>
-	<!-- 我是注释，语法均为Javascript原生语法，默认分割符为 <% %> ，也可以自定义，参见API部分 -->
-	<!-- 输出变量语句，输出title -->
-	<h1>title:<%=title%></h1>
-	<!-- 判断语句if else-->
-	<%if(list.length>1) { %>
-		<h2>输出list，共有<%=list.length%>个元素</h2>
-		<ul>
-			<!-- 循环语句 for-->
-			<%for(var i=0;i<5;i++){%>
-				<li><%=list[i]%></li>
-			<%}%>
-		</ul>
-	<%}else{%>
-		<h2>没有list数据</h2>	
-	<%}%>
-</div>	
-</script>
-<!-- 模板1结束 -->
+	//index.html
+	<!doctype html>
+	<html>
+	<head>
+	<meta charset="utf-8"/>
+	<title>test</title>
+	<!-- 引入baiduTemplate -->
+	<script type="text/javascript" src="./baiduTemplate.js"></script>
+	</head>
+	<body>
+	<div id='result'></div>
+	<!-- 模板1开始，可以使用script（type设置为text/html）来存放模板片段，并且用id标示 -->
+	<script id="t:_1234-abcd-1" type="text/html">
+	<div>
+		<!-- 我是注释，语法均为Javascript原生语法，默认分割符为 <% %> ，也可以自定义，参见API部分 -->
+		<!-- 输出变量语句，输出title -->
+		<h1>title:<%=title%></h1>
+		<!-- 判断语句if else-->
+		<%if(list.length>1) { %>
+			<h2>输出list，共有<%=list.length%>个元素</h2>
+			<ul>
+				<!-- 循环语句 for-->
+				<%for(var i=0;i<5;i++){%>
+					<li><%=list[i]%></li>
+				<%}%>
+			</ul>
+		<%}else{%>
+			<h2>没有list数据</h2>	
+		<%}%>
+	</div>	
+	</script>
+	<!-- 模板1结束 -->
 
-<!-- 使用模板 -->
-<script type="text/javascript">
-var data={
-	"title":'欢迎使用baiduTemplate',
-	"list":[
-		'test1:默认支持HTML转义，如输出<script>，也可以关掉，语法<:=value> 详见API',
-		'test2:',
-		'test3:',
-		'test4:list[5]未定义，模板系统会输出空'
-	]
-};
+	<!-- 使用模板 -->
+	<script type="text/javascript">
+	var data={
+		"title":'欢迎使用baiduTemplate',
+		"list":[
+			'test1:默认支持HTML转义，如输出<script>，也可以关掉，语法<:=value> 详见API',
+			'test2:',
+			'test3:',
+			'test4:list[5]未定义，模板系统会输出空'
+		]
+	};
 
-//使用baidu.template命名空间
-var bt=baidu.template;
+	//使用baidu.template命名空间
+	var bt=baidu.template;
 
-//可以设置分隔符
-//bt.LEFT_DELIMITER='<!';
-//bt.RIGHT_DELIMITER='!>';
+	//可以设置分隔符
+	//bt.LEFT_DELIMITER='<!';
+	//bt.RIGHT_DELIMITER='!>';
 
-//最简使用方法
-var html=bt('t:_1234-abcd-1',data);
+	//最简使用方法
+	var html=bt('t:_1234-abcd-1',data);
 
-//渲染
-document.getElementById('results').innerHTML=html;
-</script>
+	//渲染
+	document.getElementById('results').innerHTML=html;
+	</script>
 
-</body>
-</html>
+	</body>
+	</html>
