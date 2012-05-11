@@ -18,12 +18,12 @@
 ##二、基本用法
 ###1、存放：
 ####模板块可以放在 <script> 中，设置type属性为text/html，用id标识
-####如： 
-			<script id='tpl' type="text/html">
-			<!-- 模板部分 -->
+如： 
+	<script id='tpl' type="text/html">
+	<!-- 模板部分 -->
 
-			<!-- 模板结束 -->	
-			</script>
+	<!-- 模板结束 -->	
+	</script>
 
 ####或者存放在<textarea>中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识
 
