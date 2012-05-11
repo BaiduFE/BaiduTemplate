@@ -23,11 +23,14 @@
 	<head>
 	<meta charset="utf-8"/>
 	<title>test</title>
+
 	<!-- 引入baiduTemplate -->
 	<script type="text/javascript" src="./baiduTemplate.js"></script>
+
 	</head>
 	<body>
 	<div id='result'></div>
+
 	<!-- 模板1开始，可以使用script（type设置为text/html）来存放模板片段，并且用id标示 -->
 	<script id="t:_1234-abcd-1" type="text/html">
 	<div>
