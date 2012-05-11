@@ -173,7 +173,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	var html=bt('t:_1234-abcd-1',data);
 
 	//渲染
-	document.getElementById('results').innerHTML=html;
+	document.getElementById('result').innerHTML=html;
 	</script>
 
 	</body>
