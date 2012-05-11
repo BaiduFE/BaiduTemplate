@@ -3,6 +3,8 @@
 
 ##一、baiduTemplate 简介
 
+baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
+
 ###应用场景：
 	前端使用的模板系统  或  后端Javascript环境发布页面
 
@@ -29,7 +31,7 @@
 
 ####或者存放在 &lt;textarea&gt; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识，如：
 
-	<textarea id='tpl'>
+	<textarea id='tpl' style='display:none;'>
 	<!-- 模板部分 -->
 
 	<!-- 模板结束 -->	
@@ -71,15 +73,24 @@
 	var data={
 		title:'baiduTemplate',
 		list:['test1<script>','test2','test3']
-	}	
+	}
 
 ####输出一个变量
 
 	//默认HTML转义，如果变量未定义输出为空
-	<%=title%>
+	<%=title%>  
 
 	//不转义
 	<%:=title%> 或 <%-title%>
+
+	//URL转义
+	<%:u=title%>
+
+	//标签转义
+	<%:v=title%>
+
+	//HTML转义（默认自动）
+	<%=title%> 或 <%:h=title%>
 
 ####判断语句
 	<%if(list.length){%>
