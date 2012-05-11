@@ -21,7 +21,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 
 ###1、放置模板片段：
 
-####页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/html，用id标识，如：
+####页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/template或text/html，用id标识，如：
 
 	<script id='tpl' type="text/template">
 	<!-- 模板部分 -->
