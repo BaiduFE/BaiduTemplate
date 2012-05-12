@@ -3,7 +3,7 @@
 
 ##一、baiduTemplate 简介
 
-####baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
+####baiduTemplate希望创造一个用户觉得“简单好用”的JS模板引擎
 
 ###应用场景：
 	前端使用的模板系统  或  后端Javascript环境发布页面
