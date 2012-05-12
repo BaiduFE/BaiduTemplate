@@ -113,7 +113,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 ####判断语句
 
 	<%if(list.length){%>
-		<h2>list.length</h2>
+		<h2><%=list.length%></h2>
 	<%}else{%>
 		<h2>list长度为0<h2>
 	<%}%>
