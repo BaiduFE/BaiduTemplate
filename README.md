@@ -131,7 +131,7 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	//设置左分隔符为 <!
 	baidu.template.LEFT_DELIMITER='<!';
 
-	//设置左分隔符为 <!	
+	//设置右分隔符为 <!	
 	baidu.template.RIGHT_DELIMITER='!>';
 
 
