@@ -36,7 +36,7 @@
             compile(str);
 
         //有数据则返回HTML字符串，没有数据则返回函数
-        return data ? fn( data ) : fn;
+        return isObject(data) ? fn( data ) : fn;
     };
 
     //取得命名空间 baidu.template
@@ -86,6 +86,11 @@
         return new Function("_template_object",
             "var _template_fun_array=[];"+"with(_template_object){_template_fun_array.push('"+analysisStr(str)+"');}return _template_fun_array.join('');"
         );
+    };
+
+    //判断是否是Object类型
+    var isObject = function (source) {
+        return 'function' == typeof source || !!(source && 'object' == typeof source);
     };
 
     //解析模板字符串
