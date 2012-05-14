@@ -12,28 +12,26 @@
     //模板函数
     var bt = function(str, data){
 
-        //检查是否有不是字母、-、：、.、的字符  即，检查是否是模板   W3C文档中规定，id的名字可由 字母 数字 冒号 横线 下划线 等组成
-        var fn = !/[^\w-:.]/.test(str) ?
-
-            //不是模板，看下缓存有没有数据，缓存没有数据则取到对应dom中的内容，调用模板引擎生成缓存函数
-            cache[str] = cache[str] || 
-            (function(){
-                var ele=document.getElementById(str);
-                var html='';
-                
-                //支持textarea情况  textarea或者input则取value
-                if(ele && /^(textarea|input)$/i.test(ele.tagName)){
-                    html=ele.value;
-                }else{
-                    html=ele.innerHTML;
-                };
-                
-                //支持模板和id完全相同
+        //检查是否有该id的元素存在，如果有元素则获取元素的innerHTML/value，否则认为字符串为模板
+        //HTML5规定ID可以由任何不包含空格字符的字符串组成，因此无法通过正则检测一个字符串是否为元素ID
+        //@see http://dev.w3.org/html5/markup/datatypes.html#common.data.id-def
+        var fn = (function() {
+            var element = document.getElementById(str);
+            if (element) {
+                //由于使用DOM元素作为模板容器的情况下，使用的模板数量不会太多，因此会对模板编译后的函数进行缓存
+                //先检查缓存中有没有数据，有则直接返回
+                if (cache[str]) {
+                    return cache[str];
+                }
+                //textarea或input则取value，其它情况取innerHTML
+                var html = /^(textarea|input)$/i.test(element.nodeName) ? element.value : element.innerHTML;
                 return compile(html);
-            })() : 
-
-            //是模板字符串，则生成一个函数
-            compile(str);
+            } else {
+                //是模板字符串，则生成一个函数
+                //反之如果直接传入字符串作为模板，则可能变化过多，因此不考虑缓存
+                return compile(str);
+            }
+        }());
 
         //有数据则返回HTML字符串，没有数据则返回函数
         return data ? fn( data ) : fn;
