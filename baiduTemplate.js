@@ -35,7 +35,7 @@
             //是模板字符串，则生成一个函数
             compile(str);
 
-        //有数据则返回HTML字符串，没有数据则返回函数
+        //有数据则返回HTML字符串，没有数据则返回函数 支持data={}的情况
         return isObject(data) ? fn( data ) : fn;
     };
 
