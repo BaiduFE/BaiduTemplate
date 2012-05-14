@@ -8,9 +8,9 @@
 */
 
 ;(function(){
-    var space = (typeof module !== 'undefined' && module.exports) || function() { return this; }();
     //取得命名空间 baidu.template
-    var baidu=space.baidu=space.baidu||{};
+    //nodejs下用module.exports，浏览器下用window，但考虑有其他环境（如phantomjs或wcript）存在，使用this获取全局对象
+    var baidu = typeof module === 'undefined' ? (this.baidu = this.baidu || {}) : module.exports;
 
     //模板函数
     var bt = function(str, data){
@@ -19,7 +19,7 @@
         //@see http://dev.w3.org/html5/markup/datatypes.html#common.data.id-def
         var fn = (function() {
             //后端环境没有document
-            if (!space.document) {
+            if (!this.document) {
                 return compile(str);
             }
 
