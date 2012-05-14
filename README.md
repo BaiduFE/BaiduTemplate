@@ -3,15 +3,15 @@
 
 ##一、baiduTemplate 简介
 
-baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
+####baiduTemplate希望创造一个用户觉得“简单好用”的JS模板引擎
 
-###应用场景：
+###1、应用场景：
 	前端使用的模板系统  或  后端Javascript环境发布页面
 
-###功能概述：
+###2、功能概述：
 	提供一套模板语法，用户可以写一个模板区块，每次根据传入的数据，生成对应数据产生的HTML片段，渲染不同的效果。
 
-###特性：
+###3、特性：
 	1、语法简单，学习成本极低，开发效率提升很大，性价比较高（使用Javascript原生语法）；
 	2、默认HTML转义（防XSS攻击），并且支持包括URL转义等多种转义；
 	3、变量未定义自动输出为空，防止页面错乱；
@@ -19,11 +19,11 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 
 ##二、基本用法
 
-###1、存放：
+###1、放置模板片段：
 
-####模板块可以放在 &lt;script&gt; 中，设置type属性为text/html，用id标识，如：
+####页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/template或text/html，用id标识，如：
 
-	<script id='tpl' type="text/html">
+	<script id='tpl' type="text/template">
 	<!-- 模板部分 -->
 
 	<!-- 模板结束 -->	
@@ -37,37 +37,44 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	<!-- 模板结束 -->	
 	</textarea>
 
-###2、调用
+####模板也可以直接存储在一个变量中
+
+	var tpl = "<!-- 模板开始 --> 模板内容 <!-- 模板结束 -->";
+
+###2、调用引擎方式
 
 ####数据结构是一个JSON，如：
+
 	var data={
 		title:'baiduTemplate',
 		list:['test1','test2','test3']
 	}
 
 ####baiduTemplate占用baidu.template命名空间
+
+	//可以付值给一个短名变量使用
 	var bt = baidu.template;
 
-####可以设置分隔符，默认为 <% %>
-	bt.LEFT_DELIMITER='<!';
-	bt.RIGHT_DELIMITER='!>';
-
 ####tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段
-	var html0 = bt(tpl,data);
+
+	var html0 = baidu.template(tpl,data);
 
 ####或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段
-	var fun = bt(tpl);
+
+	var fun = baidu.template(tpl);
 	var html1 = fun(data1);
 	var html2 = fun(data2);
 
 ####最后将他们插入到一个容器中即可
+
 	document.getElementById('result0').innerHTML=html0;
 	document.getElementById('result1').innerHTML=html1;
 	document.getElementById('result2').innerHTML=html2;
 
-###3、基本语法（默认分隔符为<% %>，也可以自定义）
+###3、模板基本语法（默认分隔符为<% %>，也可以自定义）
 
 ####分隔符内语句为js语法，如：
+
 	<% var test = function(){
 		//函数体
 	};
@@ -78,11 +85,18 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	%>
 
 ####假定事先设置数据为
+
 	var data={
 		title:'baiduTemplate',
 		list:['test1<script>','test2','test3']
 	}
 
+####注释
+	
+	<!-- 模板中可以用HTML注释 -->  或  <%* 这是模板自带注释格式 *%>
+
+	<% //分隔符内支持JS注释  %>
+	
 ####输出一个变量
 
 	//默认HTML转义，如果变量未定义输出为空
@@ -91,26 +105,41 @@ baiduTemplate希望创造一个用户觉得简单好用的JS模板引擎
 	//不转义
 	<%:=title%> 或 <%-title%>
 
-	//URL转义
+	//URL转义，UI变量使用在模板链接地址URL的参数中时需要转义
 	<%:u=title%>
 
-	//标签转义
+	//UI变量使用在HTML页面标签onclick等事件函数参数中需要转义
+	//“<”转成“&lt;”、“>”转成“&gt;”、“&”转成“&amp;”、“'”转成“\&#39;”
+	//“"”转成“\&quot;”、“\”转成“\\”、“/”转成“\/”、\n转成“\n”、\r转成“\r”
 	<%:v=title%>
 
 	//HTML转义（默认自动）
 	<%=title%> 或 <%:h=title%>
 
 ####判断语句
+
 	<%if(list.length){%>
-		<h2>list.length</h2>
-	<%}else{%
+		<h2><%=list.length%></h2>
+	<%}else{%>
 		<h2>list长度为0<h2>
 	<%}%>
 
 ####循环语句
+
 	<%for(var i=0;i<list.length;i++){%>
 			<li><%=list[i]%></li>
 	<%}%>
+
+###4、不推荐使用功能
+
+####用户可以自定义分隔符，默认为 <% %>，如：
+	
+	//设置左分隔符为 <!
+	baidu.template.LEFT_DELIMITER='<!';
+
+	//设置右分隔符为 <!	
+	baidu.template.RIGHT_DELIMITER='!>';
+
 
 ##三、使用举例
 
