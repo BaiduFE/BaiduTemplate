@@ -8,14 +8,21 @@
 */
 
 ;(function(){
+    var space = (typeof module !== 'undefined' && module.exports) || function() { return this; }();
+    //取得命名空间 baidu.template
+    var baidu=space.baidu=space.baidu||{};
 
     //模板函数
     var bt = function(str, data){
-
         //检查是否有该id的元素存在，如果有元素则获取元素的innerHTML/value，否则认为字符串为模板
         //HTML5规定ID可以由任何不包含空格字符的字符串组成，因此无法通过正则检测一个字符串是否为元素ID
         //@see http://dev.w3.org/html5/markup/datatypes.html#common.data.id-def
         var fn = (function() {
+            //后端环境没有document
+            if (!space.document) {
+                return compile(str);
+            }
+
             var element = document.getElementById(str);
             if (element) {
                 //由于使用DOM元素作为模板容器的情况下，使用的模板数量不会太多，因此会对模板编译后的函数进行缓存
@@ -36,9 +43,6 @@
         //有数据则返回HTML字符串，没有数据则返回函数
         return data ? fn( data ) : fn;
     };
-
-    //取得命名空间 baidu.template
-    baidu=window.baidu||{};
     baidu.template=bt;
 
     //缓存  将对应id模板生成的函数缓存下来。
