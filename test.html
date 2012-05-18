@@ -11,47 +11,70 @@
 
 
 <!-- 测试模板1开始 -->
-<script type="text/template">
-1、基本输出（自动HTML转义）：  <%=value1%>
+<script id='t:_1234-abcd-1' type="text/template">
+1、基本输出（自动HTML转义）：  <%=value1%> 
+<br>
 2、容错写法：  <%=value2;%>
+<br>
 3、不转义输出： <%:=value3%> 或 <%-value3%>
+<br>
 4、容错写法： <%:=value4;%>
+<br>
 5、URL转义输出： <%:u=value5%>
+<br>
 6、容错写法： <%:u=value6;%>
+<br>
 7、UI变量在页面标签事件中使用转义： <%:v=value7%>
+<br>
 8、容错写法：<%:v=value8;%>
+<br>
 9、HTML转义输出：<%:h=value9%>
+<br>
 10、容错写法：<%:h=value10;%>
+<br>
 11、变量未定义自动输出空：<%=value11%>
+<br>
 12、模板直接输出特殊字符：5个斜杠 ///// 5个单引 ‘’‘’‘ 5个双引 “”“”“
-13、注释：<!-- HTML注释支持 -->  <%* 模板自带注释 *%> <% //js注释方式 %>
+<br>
+13、注释：
+	<!-- HTML注释支持 -->  
+	<%* 模板自带注释 *%> 
+	<% //js注释方式 
+	%>
+<br>
 14、判断语句：
 	<%if(value14){%>
-		<input type="text" value="<%v:=value14%>">
+		<input type="text" value="<%:v=value14%>">
 	<%}else{%>
 		无值
 	<%}%>
+<br>
 15、容错：
 	<%if(value15){%>
-		<input type="text" value="<%v:=value14%>">
-	<%}
+		<input type="text" value="<%:v=value14%>">
+	<%}%>
 	<%else%>
 	<%{%>
 		无值
 	<%}%>
-	或
-	<%if(value15){%>
-		<input type="text" value="<%v:=value14%>">
-	<%}else%>
-	<%{%>
-		无值
-	<%}%>	
+<br>
 16、循环语句：
-<%for(){%>
-	
+<br>
+<ul>
+<%for(var i=0;i<value17.length;i++){%>
+	<li><%=value17[i]%></li>
 <%}%>
+</ul>
+<br>
 17、容错：
-18、分隔符内的JS语法支持：
+<br>
+<ul>
+<%for(var i=0;i<value17.length;i++)%>
+<%{%>
+	<li><%=value17[i]%></li>
+<%}%>
+</ul>
+
 </script>
 <!-- 测试模板1结束 -->
 
@@ -59,22 +82,37 @@
 
 <script type="text/javascript">
 	window.onload=function(){
+		//测试数据，对应每个用例
 		var data={
-			"title":'http://www.w3school.com.cn',
-			"list":['test1<script>','test2','test3','test4','test5'],
-			"what":'wangxiao'
+			value1:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value2:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value3:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value4:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value5:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value6:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value7:'<b>http://wangxiao.github.com/BaiduTemplate/</b><b>\\\'\"</b>',
+			value8:'<b>http://wangxiao.github.com/BaiduTemplate/</b><b>\\\'\"</b>',
+			value9:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value10:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value14:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value15:'<b>http://wangxiao.github.com/BaiduTemplate/</b>',
+			value16:['<b>这是value</b>',123,'<b>http://wangxiao.github.com/BaiduTemplate/</b>'],
+			value17:['<b>这是value</b>',123,'<b>http://wangxiao.github.com/BaiduTemplate/</b>']
 		};
-		//console.log('data:'+data);
+		
+		//使用
 		var bat=baidu.template;
+		
 		//设置分隔符
 		//bat.LEFT_DELIMITER='<!';
 		//bat.RIGHT_DELIMITER='!>';
-		//console.log(bat('t:_1234-abcd-4'));
-		//var fun = bat('t:_1234-abcd-4');
-		//var html=fun(data);
-		var html=bat('t:_1234-abcd-4',data);
-		console.log(html);
-		//console.log('html'+html);
+
+		//输出函数
+		var fun=bat('t:_1234-abcd-1');
+		alert("输出函数体：\n"+fun);
+		
+		//显示结果
+		var html=bat('t:_1234-abcd-1',data);
 		document.getElementById('results').innerHTML=html;
 	}
 </script>
