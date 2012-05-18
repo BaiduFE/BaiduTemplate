@@ -11,155 +11,53 @@
 
 
 <!-- 测试模板1开始 -->
-<script id="t:_1234-abcd-1" type="text/html">
-
-<div>
-	<%*  这里可以任意的注释*%>
-	<!-- 这样也可以注释 -->
-	<h1><%=title%></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘’‘’‘ 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
-	<h1><%=wang%></h1>
-	<%var testValue='<script';%>
-	<%var testNull%>
-	testValue:<%=testValue%>
-</div>
-<div>
-<%if(list.length=5) { %>
-	<h2><%=list[4]%></h2>
-<%}else{%>
-	我
-<%}%>
-<ul>
-	<%for(var i=0;i<list.length;i++)%>
-	<%{%>
-		<li><%=list[i]%></li>
+<script type="text/template">
+1、基本输出（自动HTML转义）：  <%=value1%>
+2、容错写法：  <%=value2;%>
+3、不转义输出： <%:=value3%> 或 <%-value3%>
+4、容错写法： <%:=value4;%>
+5、URL转义输出： <%:u=value5%>
+6、容错写法： <%:u=value6;%>
+7、UI变量在页面标签事件中使用转义： <%:v=value7%>
+8、容错写法：<%:v=value8;%>
+9、HTML转义输出：<%:h=value9%>
+10、容错写法：<%:h=value10;%>
+11、变量未定义自动输出空：<%=value11%>
+12、模板直接输出特殊字符：5个斜杠 ///// 5个单引 ‘’‘’‘ 5个双引 “”“”“
+13、注释：<!-- HTML注释支持 -->  <%* 模板自带注释 *%> <% //js注释方式 %>
+14、判断语句：
+	<%if(value14){%>
+		<input type="text" value="<%v:=value14%>">
+	<%}else{%>
+		无值
 	<%}%>
-</ul>
-</div>
-<%for(var i=0;i<10;i++){%>
-	<%=i%>
+15、容错：
+	<%if(value15){%>
+		<input type="text" value="<%v:=value14%>">
+	<%}
+	<%else%>
+	<%{%>
+		无值
+	<%}%>
+	或
+	<%if(value15){%>
+		<input type="text" value="<%v:=value14%>">
+	<%}else%>
+	<%{%>
+		无值
+	<%}%>	
+16、循环语句：
+<%for(){%>
+	
 <%}%>
-<%function testfunction(){return 'testfunction running'}%>
-<%=testfunction()%>
+17、容错：
+18、分隔符内的JS语法支持：
 </script>
 <!-- 测试模板1结束 -->
-
-<!-- 测试模板2开始 -->
-<script id="t:_1234-abcd-2" type="text/html">
-
-<div>
-	<#*  这里可以任意的注释*#>
-	<!-- 这样也可以注释 -->
-	<h1><#=title#></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘’‘’‘ 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
-	<h1><#=wang#></h1>
-	<#var testValue='<script';#>
-	<#var testNull#>
-	testValue:<#=testValue#>
-</div>
-<div>
-<#if(list.length=5) { #>
-	<h2><#=list[4]#></h2>
-<#}else{#>
-	我
-<#}#>
-<ul>
-	<#for(var i=0;i<list.length;i++)#>
-	<#{#>
-		<li><#=list[i]#></li>
-	<#}#>
-</ul>
-</div>
-<#for(var i=0;i<10;i++){#>
-	<#=i#>
-<#}#>
-<#function testfunction(){return 'testfunction running'}#>
-<#=testfunction()#>
-</script>
-<!-- 测试模板2结束 -->
-
-
-<!-- 测试模板3开始 -->
-<script id="t:_1234-abcd-3" type="text/html">
-
-<div>
-	<?*  这里可以任意的注释*?>
-	<!-- 这样也可以注释 -->
-	<h1><?=title?></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘’‘’‘ 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
-	<h1><?=wang?></h1>
-	<?var testValue='<script';?>
-	<?var testNull?>
-	testValue:<?=testValue?>
-</div>
-<div>
-<?if(list.length=5) { ?>
-	<h2><?=list[4]?></h2>
-<?}else{?>
-	我
-<?}?>
-<ul>
-	<?for(var i=0;i<list.length;i++)?>
-	<?{?>
-		<li><?=list[i]?></li>
-	<?}?>
-</ul>
-</div>
-<?for(var i=0;i<10;i++){?>
-	<?=i?>
-<?}?>
-<?function testfunction(){return 'testfunction running'}?>
-<?=testfunction()?>
-</script>
-<!-- 测试模板3结束 -->
-
-<!-- 测试模板4开始 -->
-<textarea id='t:_1234-abcd-4' style='display:none;'>
-<div>
-	<!*  这里可以任意的注释*!>
-	<!-- 这样也可以注释 -->
-	<h1><!=title!></h1>
-	各种特殊符号支持 斜杠 \  \\\\\\ 单引 ’ ‘‘’‘'' 双引 "   """""""  乱七八糟的 &*…………%￥……%￥#%#（））
-	<h1><!=wang!></h1>
-	<!var testValue='<script';!>
-	<!var testNull!>
-	testValue:<!=testValue!>
-</div>
-<div>
-<!if(list.length=5) { !>
-	<h2><!=list[4]!></h2>
-<!}else{!>
-	我
-<!}!>
-<ul>
-	<!for(var i=0;i<list.length;i++)!>
-	<!{!>
-		<li><!=list[i]!></li>
-	<!}!>
-</ul>
-</div>
-<!for(var i=0;i<10;i++){!>
-	<!=i!>
-<!}!>
-<!function testfunction(){return 'testfunction running'}!>
-<!=testfunction()!>
-<br>
-测试写法
-<!var test=function(){
- 	//这是JS语法
-
-}!>
-</textarea>
-<!-- 测试模板4结束 -->
-
-<!-- 测试模板5开始 -->
-<textarea id='t:_1234-abcd-5' style='display:none;'>t:_1234-abcd-5</textarea>
-<!-- 测试模板5结束 -->
 
 <div id="results"></div>
 
 <script type="text/javascript">
-	var wang='xiao';
 	window.onload=function(){
 		var data={
 			"title":'http://www.w3school.com.cn',
@@ -169,8 +67,8 @@
 		//console.log('data:'+data);
 		var bat=baidu.template;
 		//设置分隔符
-		bat.LEFT_DELIMITER='<!';
-		bat.RIGHT_DELIMITER='!>';
+		//bat.LEFT_DELIMITER='<!';
+		//bat.RIGHT_DELIMITER='!>';
 		//console.log(bat('t:_1234-abcd-4'));
 		//var fun = bat('t:_1234-abcd-4');
 		//var html=fun(data);
