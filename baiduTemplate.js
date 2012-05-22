@@ -84,7 +84,7 @@
     //将字符串拼接生成函数，即编译过程(compile)
     var compile = function(str){
         return new Function("_template_object",
-            "var _template_fun_array=[];"+"with(_template_object){_template_fun_array.push('"+analysisStr(str)+"');}return _template_fun_array.join('');"
+            "var _template_fun_array=[];with(_template_object){_template_fun_array.push('"+analysisStr(str)+"');}return _template_fun_array.join('');"
         );
     };
 
