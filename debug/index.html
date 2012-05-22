@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="keywords" content="baidu template" />
+<meta name="description" content="javascript前端模板" />
+<title>test</title>
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<script type="text/javascript" src="./js/baiduTemplate.js"></script>
+</head>
+<body>
+	<h2>baiduTemplate 简单在线调试页面 </h2>
+	<div class='left'>
+		<h3>以下填入模板：</h3>
+		<textarea id='tpl'></textarea>
+		<h3>以下填入data（JSON）</h3>
+		<h3>var data={</h3>
+		<textarea id='data'></textarea>
+		<div id='submit_btn'>点此执行</div>
+		<h3>};</h3>
+	</div>
+	<div class='right'>
+		<div class='left'>
+			<h3>输出的HTML片段或函数</h3>
+			<textarea id='result1'></textarea>
+		</div>
+		<div class='right'>
+			<h3>输出的HTML片段或函数</h3>
+			<div id='result2'></div>			
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	window.onload=function(){
+		var tpl=[
+			'<h1><%=title%></h1>\n\n',
+			'<%if(value1){%>\n',
+			'<%=value1%>\n',
+			'<%}else{%>\n',
+			'<%}%>\n\n'
+		].join('');
+
+		var data=[
+			'title:\'BaiduTemplate\',\n',
+			'value1:\'支持HTML转义<script>\'\n'
+		].join('');
+
+		document.getElementById('data').value=data;
+		document.getElementById('tpl').value=tpl;
+		tpl=null;
+		data=null;
+
+		var submit_btn=document.getElementById('submit_btn').addEventListener('click',function(){
+			var temp = document.getElementById('data').value;
+			var tpl = document.getElementById('tpl').value;
+			var data;
+			String(tpl).replace('/^\s*?/g','');
+			String(temp).replace('/^\s*?/g','');
+			if(!tpl){
+				alert('请写个模板，如：<%=value%>');
+				return;
+			};
+			var bt = baidu.template;
+			var html = '';
+			if(temp!=''){
+				eval("data = {"+temp+"};");
+				html = bt(tpl,data);
+			}else{
+				html = bt(tpl);
+			};
+			document.getElementById('result1').innerHTML=html;			
+			document.getElementById('result2').innerHTML=html;			
+		});
+	};
+	</script>
+</body>
+</html>

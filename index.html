@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Baidutemplate by BaiduFE</title>
+    <title>BaiduTemplate模板引擎</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
+    <link href="./javascripts/rainbow-dev-custom/themes/sunburst.css" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -17,19 +16,20 @@
   <body>
 
       <header>
-        <h1>Baidutemplate</h1>
-        <p>前端模板</p>
+        <h1>BaiduTemplate</h1>
+        <p>最简单好用的JS模板引擎，JS语法学习无成本，调用也只是一个函数哦！</p>
       </header>
 
       <div id="banner">
         <span id="logo"></span>
 
-        <a href="https://github.com/BaiduFE/BaiduTemplate" class="button fork"><strong>View On GitHub</strong></a>
+        
         <div class="downloads">
-          <span>Downloads:</span>
+          <span>欢迎使用</span>
           <ul>
-            <li><a href="https://github.com/BaiduFE/BaiduTemplate/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/BaiduFE/BaiduTemplate/tarball/master" class="button">TAR</a></li>
+            <li><a href="https://github.com/wangxiao/BaiduTemplate/zipball/master" class="button">下载</a></li>
+            <li><a href="https://github.com/wangxiao/BaiduTemplate" class="button">查看GitHub</a></li>
+            <li><a target='_blank' href="http://wangxiao.github.com/BaiduTemplate/debug" class="button">在线体验</a></li>
           </ul>
         </div>
       </div><!-- end banner -->
@@ -39,38 +39,38 @@
         <ul></ul>
       </nav>
       <section>
-        <h1>百度JS模板引擎 baiduTemplate 1.0 版</h1>
+        <h1>百度JS模板引擎 baiduTemplate 1.0.1 版</h1>
 
-<h2>一、baiduTemplate 简介</h2>
+<h2>A、baiduTemplate 简介</h2>
 
 <h4>baiduTemplate希望创造一个用户觉得“简单好用”的JS模板引擎</h4>
 
 <h3>1、应用场景：</h3>
 
-<pre><code>前端使用的模板系统  或  后端Javascript环境发布页面
+<pre><code data-language="javascript">前端使用的模板系统  或  后端Javascript环境发布页面
 </code></pre>
 
 <h3>2、功能概述：</h3>
 
-<pre><code>提供一套模板语法，用户可以写一个模板区块，每次根据传入的数据，
+<pre><code data-language="javascript">提供一套模板语法，用户可以写一个模板区块，每次根据传入的数据，
 生成对应数据产生的HTML片段，渲染不同的效果。
 </code></pre>
 
 <h3>3、特性：</h3>
 
-<pre><code>1、语法简单，学习成本极低，开发效率提升很大，性价比较高（使用Javascript原生语法）；
+<pre><code data-language="javascript">1、语法简单，学习成本极低，开发效率提升很大，性价比较高（使用Javascript原生语法）；
 2、默认HTML转义（防XSS攻击），并且支持包括URL转义等多种转义；
 3、变量未定义自动输出为空，防止页面错乱；
 3、功能强大，如分隔符可自定等多种功能；
 </code></pre>
 
-<h2>二、基本用法</h2>
+<h2>B、基本用法</h2>
 
 <h3>1、放置模板片段：</h3>
 
 <h4>页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/template或text/html，用id标识，如：</h4>
 
-<pre><code>&lt;script id='tpl' type="text/template"&gt;
+<pre><code data-language="javascript">&lt;script id='tpl' type="text/template"&gt;
 &lt;!-- 模板部分 --&gt;
 
 &lt;!-- 模板结束 --&gt;   
@@ -79,7 +79,7 @@
 
 <h4>或者存放在 &lt;textarea&gt; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识，如：</h4>
 
-<pre><code>&lt;textarea id='tpl' style='display:none;'&gt;
+<pre><code data-language="javascript">&lt;textarea id='tpl' style='display:none;'&gt;
 &lt;!-- 模板部分 --&gt;
 
 &lt;!-- 模板结束 --&gt;   
@@ -88,14 +88,14 @@
 
 <h4>模板也可以直接存储在一个变量中</h4>
 
-<pre><code>var tpl = "&lt;!-- 模板开始 --&gt; 模板内容 &lt;!-- 模板结束 --&gt;";
+<pre><code data-language="javascript">var tpl = "&lt;!-- 模板开始 --&gt; 模板内容 &lt;!-- 模板结束 --&gt;";
 </code></pre>
 
 <h3>2、调用引擎方式</h3>
 
 <h4>数据结构是一个JSON，如：</h4>
 
-<pre><code>var data={
+<pre><code data-language="javascript">var data={
     title:'baiduTemplate',
     list:['test1','test2','test3']
 }
@@ -103,25 +103,25 @@
 
 <h4>baiduTemplate占用baidu.template命名空间</h4>
 
-<pre><code>//可以付值给一个短名变量使用
+<pre><code data-language="javascript">//可以付值给一个短名变量使用
 var bt = baidu.template;
 </code></pre>
 
 <h4>tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段</h4>
 
-<pre><code>var html0 = baidu.template(tpl,data);
+<pre><code data-language="javascript">var html0 = baidu.template(tpl,data);
 </code></pre>
 
 <h4>或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段</h4>
 
-<pre><code>var fun = baidu.template(tpl);
+<pre><code data-language="javascript">var fun = baidu.template(tpl);
 var html1 = fun(data1);
 var html2 = fun(data2);
 </code></pre>
 
 <h4>最后将他们插入到一个容器中即可</h4>
 
-<pre><code>document.getElementById('result0').innerHTML=html0;
+<pre><code data-language="javascript">document.getElementById('result0').innerHTML=html0;
 document.getElementById('result1').innerHTML=html1;
 document.getElementById('result2').innerHTML=html2;
 </code></pre>
@@ -130,7 +130,7 @@ document.getElementById('result2').innerHTML=html2;
 
 <h4>分隔符内语句为js语法，如：</h4>
 
-<pre><code>&lt;% var test = function(){
+<pre><code data-language="javascript">&lt;% var test = function(){
     //函数体
 };
 if(1){}else{};
@@ -142,7 +142,7 @@ function testFun(){
 
 <h4>假定事先设置数据为</h4>
 
-<pre><code>var data={
+<pre><code data-language="javascript">var data={
     title:'baiduTemplate',
     list:['test1&lt;script&gt;','test2','test3']
 }
@@ -150,14 +150,14 @@ function testFun(){
 
 <h4>注释</h4>
 
-<pre><code>&lt;!-- 模板中可以用HTML注释 --&gt;  或  &lt;%* 这是模板自带注释格式 *%&gt;
+<pre><code data-language="javascript">&lt;!-- 模板中可以用HTML注释 --&gt;  或  &lt;%* 这是模板自带注释格式 *%&gt;
 
 &lt;% //分隔符内支持JS注释  %&gt;
 </code></pre>
 
 <h4>输出一个变量</h4>
 
-<pre><code>//默认HTML转义，如果变量未定义输出为空
+<pre><code data-language="javascript">//默认HTML转义，如果变量未定义输出为空
 &lt;%=title%&gt;  
 
 //不转义
@@ -177,7 +177,7 @@ function testFun(){
 
 <h4>判断语句</h4>
 
-<pre><code>&lt;%if(list.length){%&gt;
+<pre><code data-language="javascript">&lt;%if(list.length){%&gt;
     &lt;h2&gt;&lt;%=list.length%&gt;&lt;/h2&gt;
 &lt;%}else{%&gt;
     &lt;h2&gt;list长度为0&lt;h2&gt;
@@ -186,7 +186,7 @@ function testFun(){
 
 <h4>循环语句</h4>
 
-<pre><code>&lt;%for(var i=0;i&lt;list.length;i++){%&gt;
+<pre><code data-language="javascript">&lt;%for(var i=0;i&lt;list.length;i++){%&gt;
         &lt;li&gt;&lt;%=list[i]%&gt;&lt;/li&gt;
 &lt;%}%&gt;
 </code></pre>
@@ -195,16 +195,16 @@ function testFun(){
 
 <h4>用户可以自定义分隔符，默认为 &lt;% %&gt;，如：</h4>
 
-<pre><code>//设置左分隔符为 &lt;!
+<pre><code data-language="javascript">//设置左分隔符为 &lt;!
 baidu.template.LEFT_DELIMITER='&lt;!';
 
 //设置右分隔符为 &lt;!  
 baidu.template.RIGHT_DELIMITER='!&gt;';
 </code></pre>
 
-<h2>三、使用举例</h2>
+<h2>C、使用举例</h2>
 
-<pre><code>//index.html
+<pre><code data-language="javascript">//index.html
 &lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -271,11 +271,18 @@ document.getElementById('result').innerHTML=html;
 </code></pre>
       </section>
       <footer>
-        <p>Project maintained by <a href="https://github.com/BaiduFE">BaiduFE</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+        <p>Project maintained by <a href="http://weibo.com/crazycomputer">wangxiao</a></p>
       </footer>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
     <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
-    
+<!-- 代码高亮 -->    
+<script src="./javascripts/rainbow-dev-custom/rainbow.min.js"></script>
+<script src="./javascripts/rainbow-dev-custom/language/generic.js"></script>
+<script src="./javascripts/rainbow-dev-custom/language/html.js"></script>
+<script src="./javascripts/rainbow-dev-custom/language/javascript.js"></script>
+<script src="./javascripts/rainbow-dev-custom/language/css.js"></script>
+<!-- 代码高亮结束 -->    
   </body>
 </html>
