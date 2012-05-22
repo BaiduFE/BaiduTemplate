@@ -1,3 +1,6 @@
+####请以发布页面文档为准 
+<a target="_blank" href="http://wangxiao.github.com/BaiduTemplate">最新发布地址</a>
+
 百度JS模板引擎 baiduTemplate 1.0 版
 ==========================
 
