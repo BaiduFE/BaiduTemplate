@@ -44,7 +44,7 @@
 <h2>A、baiduTemplate 简介</h2>
 
 <h4>baiduTemplate希望创造一个用户觉得“简单好用”的JS模板引擎</h4>
-
+<h4>等不及可以直接点左侧导航中的<strong>”C、使用举例“</strong></h4>
 <h3>1、应用场景：</h3>
 
 <pre><code data-language="javascript">前端使用的模板系统  或  后端Javascript环境发布页面
@@ -70,7 +70,7 @@
 
 <h4>页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/template或text/html，用id标识，如：</h4>
 
-<pre><code data-language="javascript">&lt;script id='tpl' type="text/template"&gt;
+<pre><code data-language="javascript">&lt;script id='test1' type="text/template"&gt;
 &lt;!-- 模板部分 --&gt;
 
 &lt;!-- 模板结束 --&gt;   
@@ -79,7 +79,7 @@
 
 <h4>或者存放在 &lt;textarea&gt; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识，如：</h4>
 
-<pre><code data-language="javascript">&lt;textarea id='tpl' style='display:none;'&gt;
+<pre><code data-language="javascript">&lt;textarea id='test2' style='display:none;'&gt;
 &lt;!-- 模板部分 --&gt;
 
 &lt;!-- 模板结束 --&gt;   
@@ -93,7 +93,7 @@
 
 <h3>2、调用引擎方式</h3>
 
-<h4>数据结构是一个JSON，如：</h4>
+<h4>（1）、数据结构是一个JSON，如：</h4>
 
 <pre><code data-language="javascript">var data={
     title:'baiduTemplate',
@@ -101,25 +101,34 @@
 }
 </code></pre>
 
-<h4>baiduTemplate占用baidu.template命名空间</h4>
+<h4>（2）、baiduTemplate占用baidu.template命名空间</h4>
 
 <pre><code data-language="javascript">//可以付值给一个短名变量使用
 var bt = baidu.template;
 </code></pre>
 
-<h4>tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段</h4>
+<h4>（3）、方法一：tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段</h4>
 
-<pre><code data-language="javascript">var html0 = baidu.template(tpl,data);
+<pre><code data-language="javascript">//方法一：直接传入data，返回编译后的HTML片段
+var html0 = baidu.template(tpl,data);  
+
+//或直接传入id即可
+var html0 = baidu.template('test1',data);  
 </code></pre>
 
-<h4>或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段</h4>
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;方法二：或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段</h4>
 
-<pre><code data-language="javascript">var fun = baidu.template(tpl);
+<pre><code data-language="javascript">//方法二：先不传入data，返回编译后的函数
+var fun = baidu.template(tpl);
+//或直接传入id即可
+var fun = baidu.template('test1');
+
+//之后通过改变数据，调用缓存下来的函数，产生不同的HTML片段
 var html1 = fun(data1);
 var html2 = fun(data2);
 </code></pre>
 
-<h4>最后将他们插入到一个容器中即可</h4>
+<h4>（4）、最后将他们插入到一个容器中即可</h4>
 
 <pre><code data-language="javascript">document.getElementById('result0').innerHTML=html0;
 document.getElementById('result1').innerHTML=html1;
@@ -204,7 +213,8 @@ baidu.template.RIGHT_DELIMITER='!&gt;';
 
 <h2>C、使用举例</h2>
 
-<pre><code data-language="javascript">//index.html
+<pre><code data-language="javascript">//直接复制即可使用，记得要下载baiduTemplate.js
+//index.html
 &lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
