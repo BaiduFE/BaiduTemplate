@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Baidutemplate by BaiduFE</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Baidutemplate</h1>
+        <p>前端模板</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/BaiduFE/BaiduTemplate" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/BaiduFE/BaiduTemplate/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/BaiduFE/BaiduTemplate/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>百度JS模板引擎 baiduTemplate 1.0 版</h1>
+
+<h2>一、baiduTemplate 简介</h2>
+
+<h4>baiduTemplate希望创造一个用户觉得“简单好用”的JS模板引擎</h4>
+
+<h3>1、应用场景：</h3>
+
+<pre><code>前端使用的模板系统  或  后端Javascript环境发布页面
+</code></pre>
+
+<h3>2、功能概述：</h3>
+
+<pre><code>提供一套模板语法，用户可以写一个模板区块，每次根据传入的数据，
+生成对应数据产生的HTML片段，渲染不同的效果。
+</code></pre>
+
+<h3>3、特性：</h3>
+
+<pre><code>1、语法简单，学习成本极低，开发效率提升很大，性价比较高（使用Javascript原生语法）；
+2、默认HTML转义（防XSS攻击），并且支持包括URL转义等多种转义；
+3、变量未定义自动输出为空，防止页面错乱；
+3、功能强大，如分隔符可自定等多种功能；
+</code></pre>
+
+<h2>二、基本用法</h2>
+
+<h3>1、放置模板片段：</h3>
+
+<h4>页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/template或text/html，用id标识，如：</h4>
+
+<pre><code>&lt;script id='tpl' type="text/template"&gt;
+&lt;!-- 模板部分 --&gt;
+
+&lt;!-- 模板结束 --&gt;   
+&lt;/script&gt;
+</code></pre>
+
+<h4>或者存放在 &lt;textarea&gt; 中，一般情况设置其CSS样式display:none来隐藏掉textarea，同样用id标识，如：</h4>
+
+<pre><code>&lt;textarea id='tpl' style='display:none;'&gt;
+&lt;!-- 模板部分 --&gt;
+
+&lt;!-- 模板结束 --&gt;   
+&lt;/textarea&gt;
+</code></pre>
+
+<h4>模板也可以直接存储在一个变量中</h4>
+
+<pre><code>var tpl = "&lt;!-- 模板开始 --&gt; 模板内容 &lt;!-- 模板结束 --&gt;";
+</code></pre>
+
+<h3>2、调用引擎方式</h3>
+
+<h4>数据结构是一个JSON，如：</h4>
+
+<pre><code>var data={
+    title:'baiduTemplate',
+    list:['test1','test2','test3']
+}
+</code></pre>
+
+<h4>baiduTemplate占用baidu.template命名空间</h4>
+
+<pre><code>//可以付值给一个短名变量使用
+var bt = baidu.template;
+</code></pre>
+
+<h4>tpl是传入的模板(String类型)，可以是模板的id，可以是一个模板片段字符串，传入模板和对应数据返回对应的HTML片段</h4>
+
+<pre><code>var html0 = baidu.template(tpl,data);
+</code></pre>
+
+<h4>或者可以只传入tpl，这时返回的是一个编译后的函数，可以把这个函数缓存下来，传入不同的data就可以生成不同的HTML片段</h4>
+
+<pre><code>var fun = baidu.template(tpl);
+var html1 = fun(data1);
+var html2 = fun(data2);
+</code></pre>
+
+<h4>最后将他们插入到一个容器中即可</h4>
+
+<pre><code>document.getElementById('result0').innerHTML=html0;
+document.getElementById('result1').innerHTML=html1;
+document.getElementById('result2').innerHTML=html2;
+</code></pre>
+
+<h3>3、模板基本语法（默认分隔符为&lt;% %&gt;，也可以自定义）</h3>
+
+<h4>分隔符内语句为js语法，如：</h4>
+
+<pre><code>&lt;% var test = function(){
+    //函数体
+};
+if(1){}else{};
+function testFun(){
+    return;
+};
+%&gt;
+</code></pre>
+
+<h4>假定事先设置数据为</h4>
+
+<pre><code>var data={
+    title:'baiduTemplate',
+    list:['test1&lt;script&gt;','test2','test3']
+}
+</code></pre>
+
+<h4>注释</h4>
+
+<pre><code>&lt;!-- 模板中可以用HTML注释 --&gt;  或  &lt;%* 这是模板自带注释格式 *%&gt;
+
+&lt;% //分隔符内支持JS注释  %&gt;
+</code></pre>
+
+<h4>输出一个变量</h4>
+
+<pre><code>//默认HTML转义，如果变量未定义输出为空
+&lt;%=title%&gt;  
+
+//不转义
+&lt;%:=title%&gt; 或 &lt;%-title%&gt;
+
+//URL转义，UI变量使用在模板链接地址URL的参数中时需要转义
+&lt;%:u=title%&gt;
+
+//UI变量使用在HTML页面标签onclick等事件函数参数中需要转义
+//“&lt;”转成“&amp;lt;”、“&gt;”转成“&amp;gt;”、“&amp;”转成“&amp;amp;”、“'”转成“\&amp;#39;”
+//“"”转成“\&amp;quot;”、“\”转成“\\”、“/”转成“\/”、\n转成“\n”、\r转成“\r”
+&lt;%:v=title%&gt;
+
+//HTML转义（默认自动）
+&lt;%=title%&gt; 或 &lt;%:h=title%&gt;
+</code></pre>
+
+<h4>判断语句</h4>
+
+<pre><code>&lt;%if(list.length){%&gt;
+    &lt;h2&gt;&lt;%=list.length%&gt;&lt;/h2&gt;
+&lt;%}else{%&gt;
+    &lt;h2&gt;list长度为0&lt;h2&gt;
+&lt;%}%&gt;
+</code></pre>
+
+<h4>循环语句</h4>
+
+<pre><code>&lt;%for(var i=0;i&lt;list.length;i++){%&gt;
+        &lt;li&gt;&lt;%=list[i]%&gt;&lt;/li&gt;
+&lt;%}%&gt;
+</code></pre>
+
+<h3>4、不推荐使用功能</h3>
+
+<h4>用户可以自定义分隔符，默认为 &lt;% %&gt;，如：</h4>
+
+<pre><code>//设置左分隔符为 &lt;!
+baidu.template.LEFT_DELIMITER='&lt;!';
+
+//设置右分隔符为 &lt;!  
+baidu.template.RIGHT_DELIMITER='!&gt;';
+</code></pre>
+
+<h2>三、使用举例</h2>
+
+<pre><code>//index.html
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"/&gt;
+&lt;title&gt;test&lt;/title&gt;
+
+&lt;!-- 引入baiduTemplate --&gt;
+&lt;script type="text/javascript" src="./baiduTemplate.js"&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id='result'&gt;&lt;/div&gt;
+
+&lt;!-- 模板1开始，可以使用script（type设置为text/html）来存放模板片段，并且用id标示 --&gt;
+&lt;script id="t:_1234-abcd-1" type="text/html"&gt;
+&lt;div&gt;
+    &lt;!-- 我是注释，语法均为Javascript原生语法，默认分割符为 &lt;% %&gt; ，也可以自定义，参见API部分 --&gt;
+    &lt;!-- 输出变量语句，输出title --&gt;
+    &lt;h1&gt;title:&lt;%=title%&gt;&lt;/h1&gt;
+    &lt;!-- 判断语句if else--&gt;
+    &lt;%if(list.length&gt;1) { %&gt;
+        &lt;h2&gt;输出list，共有&lt;%=list.length%&gt;个元素&lt;/h2&gt;
+        &lt;ul&gt;
+            &lt;!-- 循环语句 for--&gt;
+            &lt;%for(var i=0;i&lt;5;i++){%&gt;
+                &lt;li&gt;&lt;%=list[i]%&gt;&lt;/li&gt;
+            &lt;%}%&gt;
+        &lt;/ul&gt;
+    &lt;%}else{%&gt;
+        &lt;h2&gt;没有list数据&lt;/h2&gt;   
+    &lt;%}%&gt;
+&lt;/div&gt;  
+&lt;/script&gt;
+&lt;!-- 模板1结束 --&gt;
+
+&lt;!-- 使用模板 --&gt;
+&lt;script type="text/javascript"&gt;
+var data={
+    "title":'欢迎使用baiduTemplate',
+    "list":[
+        'test1:默认支持HTML转义，如输出&lt;script&gt;，也可以关掉，语法&lt;:=value&gt; 详见API',
+        'test2:',
+        'test3:',
+        'test4:list[5]未定义，模板系统会输出空'
+    ]
+};
+
+//使用baidu.template命名空间
+var bt=baidu.template;
+
+//可以设置分隔符
+//bt.LEFT_DELIMITER='&lt;!';
+//bt.RIGHT_DELIMITER='!&gt;';
+
+//最简使用方法
+var html=bt('t:_1234-abcd-1',data);
+
+//渲染
+document.getElementById('result').innerHTML=html;
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/BaiduFE">BaiduFE</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
