@@ -588,7 +588,6 @@ code {
   text-shadow: 0px 1px 0px #000;
   margin: 0 4px;
   padding: 2px 6px;
-  background: #333;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   -o-border-radius: 2px;
@@ -689,7 +688,7 @@ header p {
 #banner {
   z-index: 100;
   left: 0;
-  right: 50%;
+  right: 40%;
   height: 50px;
   margin-right: -382px;
   position: fixed;
@@ -746,19 +745,11 @@ header p {
   background: linear-gradient(#ffe788, #ffe788);
   background-color: #ffeca0;
 }
-#banner .fork {
-  position: fixed;
-  left: 50%;
-  margin-left: -325px;
-  padding: 10px 12px;
-  margin-top: 6px;
-  line-height: 14px;
-  font-size: 14px;
-  background-color: #FFE788;
-}
+
 #banner .downloads {
   float: right;
   margin: 0 45px 0 0;
+  width: 320px;
 }
 #banner .downloads span {
   float: left;
@@ -792,7 +783,7 @@ header p {
 }
 
 section {
-  width: 590px;
+  width: 680px;
   padding: 30px 30px 50px 30px;
   margin: 20px 0;
   margin-top: 190px;
