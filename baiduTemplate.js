@@ -137,10 +137,10 @@
             .replace(new RegExp("("+_left+":?[hvu]?[\\s]*?=[\\s]*?[^;|"+_right+"]*?);[\\s]*?"+_right,"g"),"$1"+_right_)
 
             //定义变量，如果没有分号，需要容错  <%var val='test'%>
-            .replace(new RegExp("("+_left+"[\\s]*?var[\\s]*?.*?[\\s]*?[^;])[\\s]*?"+_right,"g"),"$1;"+_right_)
+            //.replace(new RegExp("("+_left+"[\\s]*?var[\\s]*?.*?[\\s]*?[^;])[\\s]*?"+_right,"g"),"$1;"+_right_)
 
             //用来清理会报错的容易产生的无用间隔  如 <%if()%><%{%><%}%><%else%><%{%><%}%>
-            .replace(new RegExp("(?:"+_right+_left+")?[\\s]*?\\{","g"),"{").replace(new RegExp("\\}[\\s]*?(?:"+_right+_left+")?[\\s]*?else\\b[\\s]*?(?:"+_right+_left+")?[\\s]*?\\{","g"),"}else{")
+            //.replace(new RegExp("(?:"+_right+_left+")?[\\s]*?\\{","g"),"{").replace(new RegExp("\\}[\\s]*?(?:"+_right+_left+")?[\\s]*?else\\b[\\s]*?(?:"+_right+_left+")?[\\s]*?\\{","g"),"}else{")
 
             //按照 <% 分割为一个个数组，再用 \t 和在一起，相当于将 <% 替换为 \t
             //将模板按照<%分为一段一段的，再在每段的结尾加入 \t,即用 \t 将每个模板片段前面分隔开
