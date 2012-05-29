@@ -1,5 +1,5 @@
 /**
-*占用命名空间  baidu.template
+*占用命名空间  baidu.template 1.0.2
 *@param str {String|HtmlElement} dom结点ID,dom，或者模板string
 *@param data {Object} 需要渲染的json对象，可以为空。
 *@return 如果无data，直接返回函数，如果有data，返回html.
