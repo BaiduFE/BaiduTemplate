@@ -1,0 +1,13 @@
+{
+    "name":"baiduTemplate",
+    "version":"1.0.2 - dev",
+    "description":"an easy to use javascript template engine",
+    "homepage":"http://baidufe.github.com/BaiduTemplate",
+    "author":"baiduTemplate.js authors {1988wangxiao@gmail.com | http://weibo.com/crazycomputer}",
+    "keywords":["baidu","baidufe","javascript","template","baiduTemplate","baidutemplate"],
+    "repository":{
+        "type":"git",
+        "url":"git://github.com/BaiduFE/BaiduTemplate.git"
+    },
+    "main":"./BaiduTemplate"
+}
