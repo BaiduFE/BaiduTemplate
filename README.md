@@ -26,6 +26,10 @@
 	
 	<script type="text/javascript" src="./baiduTemplate.js"></script>
 
+####如果想要在nodejs环境中使用，可以通过npm安装
+	
+	npm install baiduTemplate
+
 ###1、放置模板片段：
 
 ####页面中，模板块可以放在 &lt;script&gt; 中，设置type属性为text/template或text/html，用id标识，如：
