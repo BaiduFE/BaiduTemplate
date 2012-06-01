@@ -1,4 +1,4 @@
-百度JS模板引擎 baiduTemplate 1.0 版
+百度JS模板引擎 baiduTemplate 1.0.2 版 文档
 ==========================
 
 ##一、baiduTemplate 简介
@@ -19,6 +19,16 @@
 	3、功能强大，如分隔符可自定等多种功能；
 
 ##二、基本用法
+
+###0、引入文件：
+
+####baiduTemplate使用仅需引入baiduTemplate.js文件，未压缩是考虑大家调错阅读等方便，上线前请自行压缩代码。
+	
+	<script type="text/javascript" src="./baiduTemplate.js"></script>
+
+####如果想要在nodejs环境中使用，可以通过npm安装
+	
+	npm install baiduTemplate
 
 ###1、放置模板片段：
 
