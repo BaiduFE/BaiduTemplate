@@ -1,5 +1,5 @@
 /**
- * baiduTemplate简单好用的Javascript模板引擎 1.0.2 版本
+ * baiduTemplate简单好用的Javascript模板引擎 1.0.2 nodejs版本
  * 开源协议：BSD License
  * 浏览器环境占用命名空间 baidu.template ，nodejs环境直接安装 npm install baiduTemplate
  * @param str{String|HtmlElement} dom结点ID,dom，或者模板string
@@ -63,13 +63,7 @@
 
     //HTML转义
     bt._encodeHTML = function (source) {
-        return String(source)
-            .replace(/&/g,'&amp;')
-            .replace(/</g,'&lt;')
-            .replace(/>/g,'&gt;')
-            .replace(/\\/g,'&#92;')
-            .replace(/"/g,'&quot;')
-            .replace(/'/g,'&#39;');
+        return String(source).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\\/g,'&#92;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     };
 
     //转义影响正则的字符
@@ -79,16 +73,7 @@
 
     //转义UI UI变量使用在HTML页面标签onclick等事件函数参数中
     bt._encodeEventHTML = function (source) {
-        return String(source)
-            .replace(/&/g,'&amp;')
-            .replace(/</g,'&lt;')
-            .replace(/>/g,'&gt;')
-            .replace(/"/g,'&quot;')
-            .replace(/'/g,'&#39;')
-            .replace(/\\/g,'\\')
-            .replace(/\//g,'\/')
-            .replace(/\n/g,'\n')
-            .replace(/\r/g,'\r');
+        return String(source).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/\\/g,'\\').replace(/\//g,'\/').replace(/\n/g,'\n').replace(/\r/g,'\r');
     };
 
     //将字符串拼接生成函数，即编译过程(compile)
@@ -158,7 +143,7 @@
             //找到 \t=任意一个字符%> 替换为 ‘，任意字符,'
             //即替换简单变量  \t=data%> 替换为 ',data,'
             //默认HTML转义  也支持HTML转义写法<%:h=value%>  
-            .replace(new RegExp("\\t(?::h)?=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':baidu.template._encodeHTML($1),'")
+            .replace(new RegExp("\\t(?::h)?=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':$1,'")
 
             //支持不转义写法 <%:=value%>和<%-value%>
             .replace(new RegExp("\\t(?::=|-)(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':$1,'")
@@ -167,7 +152,7 @@
             .replace(new RegExp("\\t:u=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':encodeURIComponent($1),'")
 
             //支持UI 变量使用在HTML页面标签onclick等事件函数参数中  <%:v=value%>
-            .replace(new RegExp("\\t:v=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':baidu.template._encodeEventHTML($1),'")
+            .replace(new RegExp("\\t:v=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':$1,'")
 
             //将字符串按照 \t 分成为数组，在用'); 将其合并，即替换掉结尾的 \t 为 ');
             //在if，for等语句前面加上 '); ，形成 ');if  ');for  的形式
