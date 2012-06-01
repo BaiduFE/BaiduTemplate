@@ -64,17 +64,7 @@
 	<%}%>
 <br>
 <br>
-15、容错：
-	<%if(value15){%>
-		<input type="text" value="<%:v=value14%>">
-	<%}%>
-	<%else%>
-	<%{%>
-		无值
-	<%}%>
-<br>
-<br>
-16、循环语句：
+15、循环语句：
 <br>
 <ul>
 <%for(var i=0;i<value17.length;i++){%>
@@ -83,16 +73,7 @@
 </ul>
 <br>
 <br>
-17、容错：
-<br>
-<ul>
-<%for(var i=0;i<value17.length;i++)%>
-<%{%>
-	<li><%=value17[i]%></li>
-<%}%>
-</ul>
-<br>
-18、a标签 <br>
+16、a标签 <br>
 单引问题：<a target='_blank' href='http://www.baidu.com ' onclick='alert("test");'>test</a><br>
 双引问题：<a target="_blank" href="http://www.baidu.com" onclick="alert('test');">test</a><br>
 
