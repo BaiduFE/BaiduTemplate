@@ -61,6 +61,9 @@
     bt.LEFT_DELIMITER = bt.LEFT_DELIMITER||'<%';
     bt.RIGHT_DELIMITER = bt.RIGHT_DELIMITER||'%>';
 
+    //自定义默认是否转义，默认为默认自动转义
+    bt.ESCAPE = true;
+
     //HTML转义
     bt._encodeHTML = function (source) {
         return String(source)
@@ -153,12 +156,27 @@
 
             //按照 <% 分割为一个个数组，再用 \t 和在一起，相当于将 <% 替换为 \t
             //将模板按照<%分为一段一段的，再在每段的结尾加入 \t,即用 \t 将每个模板片段前面分隔开
-            .split(_left_).join("\t")
+            .split(_left_).join("\t");
 
-            //找到 \t=任意一个字符%> 替换为 ‘，任意字符,'
-            //即替换简单变量  \t=data%> 替换为 ',data,'
-            //默认HTML转义  也支持HTML转义写法<%:h=value%>  
-            .replace(new RegExp("\\t(?::h)?=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':baidu.template._encodeHTML($1),'")
+        //支持用户配置默认是否自动转义
+        if(bt.ESCAPE){
+            str = str
+
+                //找到 \t=任意一个字符%> 替换为 ‘，任意字符,'
+                //即替换简单变量  \t=data%> 替换为 ',data,'
+                //默认HTML转义  也支持HTML转义写法<%:h=value%>  
+                .replace(new RegExp("\\t=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':baidu.template._encodeHTML($1),'");
+        }else{
+            str = str
+                
+                //默认不转义HTML转义
+                .replace(new RegExp("\\t=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':$1,'");
+        };
+
+        str = str
+
+            //支持HTML转义写法<%:h=value%>  
+            .replace(new RegExp("\\t:h=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':baidu.template._encodeHTML($1),'")
 
             //支持不转义写法 <%:=value%>和<%-value%>
             .replace(new RegExp("\\t(?::=|-)(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':$1,'")
