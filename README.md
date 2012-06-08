@@ -1,4 +1,4 @@
-百度JS模板引擎 baiduTemplate 1.0.2 版 文档
+百度JS模板引擎 baiduTemplate 1.0.3 版 文档
 ==========================
 
 ##一、baiduTemplate 简介
@@ -146,11 +146,15 @@
 ####用户可以自定义分隔符，默认为 <% %>，如：
 	
 	//设置左分隔符为 <!
-	baidu.template.LEFT_DELIMITER='<!';
+	baidu.template.LEFT_DELIMITER = '<!';
 
 	//设置右分隔符为 <!	
-	baidu.template.RIGHT_DELIMITER='!>';
+	baidu.template.RIGHT_DELIMITER = '!>';
 
+####用户可以自定义是否自动HTML转义
+
+	//设置默认是否自动HTML转义,true为自动转义，false为默认不转义
+	baidu.template.ESCAPE = false;
 
 ##三、使用举例
 
@@ -218,3 +222,15 @@
 
 	</body>
 	</html>
+
+##四、change log
+
+###1.0.3：
+	通过产品线反馈，经过讨论增加自定义是否默认转义接口 baidu.template.ESCAPE
+
+###1.0.2：
+	优化正则，提升性能，修复bug，支持nodejs，支持npm install baiduTemplate可以安装
+
+###1.0.1：
+	优化正则，提升性能，修复bug
+
