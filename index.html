@@ -39,7 +39,7 @@
         <ul></ul>
       </nav>
       <section>
-        <h1>百度JS模板引擎 baiduTemplate 1.0.2 版</h1>
+        <h1>百度JS模板引擎 baiduTemplate 1.0.3 版</h1>
 <br>
 <h2>A、baiduTemplate 简介</h2>
 <h3>0、baiduTemplate希望创造一个用户觉得“简单好用”的JS模板引擎</h3>
@@ -229,6 +229,12 @@ baidu.template.LEFT_DELIMITER='&lt;!';
 baidu.template.RIGHT_DELIMITER='!&gt;';
 </code></pre>
 
+<h4>自定义默认输出变量是否自动HTML转义</h4>
+
+<pre><code data-language="javascript">//设置默认输出变量是否自动HTML转义，true自动转义，false不转义
+baidu.template.ESCAPE = false;
+</code></pre>
+
 <h2>C、使用举例</h2>
 
 <pre><code data-language="javascript">//直接复制即可使用，记得要下载baiduTemplate.js
@@ -287,6 +293,9 @@ var bt=baidu.template;
 //bt.LEFT_DELIMITER='&lt;!';
 //bt.RIGHT_DELIMITER='!&gt;';
 
+//可以设置输出变量是否自动HTML转义
+//bt.ESCAPE = false;
+
 //最简使用方法
 var html=bt('t:_1234-abcd-1',data);
 
@@ -297,6 +306,22 @@ document.getElementById('result').innerHTML=html;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+
+<h2>D、change log</h2>
+
+<h3>1.0.3版本</h3>
+
+<h4>通过产品线反馈，经过讨论增加自定义是否默认转义接口 baidu.template.ESCAPE</h4>
+
+<h3>1.0.2版本</h3>
+
+<h4>优化正则，提升性能，修复bug，支持nodejs，支持npm install baiduTemplate可以安装</h4>
+
+<h3>1.0.1版本</h3>
+
+<h4>优化正则，提升性能，修复bug</h4>
+
+
       </section>
       <footer>
         <p>Project maintained by <a href="http://weibo.com/crazycomputer">wangxiao</a></p>
