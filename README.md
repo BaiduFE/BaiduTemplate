@@ -1,4 +1,4 @@
-百度JS模板引擎 baiduTemplate 1.0.3 版 文档
+百度JS模板引擎 baiduTemplate 1.0.4 版 文档
 ==========================
 
 ##一、baiduTemplate 简介

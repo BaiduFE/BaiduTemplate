@@ -1,5 +1,5 @@
 /**
- * baiduTemplate简单好用的Javascript模板引擎 1.0.2 版本
+ * baiduTemplate简单好用的Javascript模板引擎 1.0.4 版本
  * 开源协议：BSD License
  * 浏览器环境占用命名空间 baidu.template ，nodejs环境直接安装 npm install baiduTemplate
  * @param str{String|HtmlElement} dom结点ID,dom，或者模板string
@@ -88,17 +88,16 @@
             .replace(/>/g,'&gt;')
             .replace(/"/g,'&quot;')
             .replace(/'/g,'&#39;')
-            .replace(/\\/g,'\\')
-            .replace(/\//g,'\/')
-            .replace(/\n/g,'\n')
-            .replace(/\r/g,'\r');
+            .replace(/\\/g,'\\\\')
+            .replace(/\//g,'\\\/')
+            .replace(/\n/g,'\\n')
+            .replace(/\r/g,'\\r');
     };
 
     //将字符串拼接生成函数，即编译过程(compile)
     var compile = function(str){
-        return new Function("_template_object",
-            "var _template_fun_array=[];\nwith(_template_object){\n_template_fun_array.push('"+analysisStr(str)+"');\n}\nreturn _template_fun_array.join('');"
-        );
+        var funBody = "var _template_fun_array=[];\n(function(data){\nvar _template_varName='';\nfor(name in data){\n_template_varName+=('var '+name+'=data[\"'+name+'\"];');\n};\neval(_template_varName);\n_template_fun_array.push('"+analysisStr(str)+"');\n})(_template_object);\nreturn _template_fun_array.join('');\n";
+        return new Function("_template_object",funBody);
     };
 
     //判断是否是Object类型
