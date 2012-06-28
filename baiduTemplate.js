@@ -1,5 +1,5 @@
 /**
- * baiduTemplate简单好用的Javascript模板引擎 1.0.2 版本
+ * baiduTemplate简单好用的Javascript模板引擎 1.0.4 版本
  * 开源协议：BSD License
  * 浏览器环境占用命名空间 baidu.template ，nodejs环境直接安装 npm install baiduTemplate
  * @param str{String|HtmlElement} dom结点ID,dom，或者模板string
