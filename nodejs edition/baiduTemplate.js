@@ -1,5 +1,5 @@
 /**
- * baiduTemplate简单好用的Javascript模板引擎 1.0.2 nodejs版本
+ * baiduTemplate简单好用的Javascript模板引擎 1.0.4 nodejs版本
  * 开源协议：BSD License
  * 浏览器环境占用命名空间 baidu.template ，nodejs环境直接安装 npm install baiduTemplate
  * @param str{String|HtmlElement} dom结点ID,dom，或者模板string
@@ -13,6 +13,9 @@
 
     //取得浏览器环境的baidu命名空间，非浏览器环境符合commonjs规范exports出去
     var baidu = typeof module === 'undefined' ? (this.baidu = this.baidu || {}) : module.exports;
+
+    //用来存储页面中的js代码(用于nodejs环境)
+    var jsStr = '';
 
     //模板函数
     var bt = function(str, data){
@@ -35,8 +38,8 @@
                 };
 
                 //textarea或input则取value，其它情况取innerHTML
-                var html = /^(textarea|input)$/i.test(element.nodeName) ? element.value : element.innerHTML;
-                return compile(html);
+                var tpl = /^(textarea|input)$/i.test(element.nodeName) ? element.value : element.innerHTML;
+                return compile(tpl);
 
             }else{
 
@@ -47,8 +50,12 @@
 
         })();
 
+        //jsStr 是将页面中<script>标签中的js代码放回页面中
+        var html = fn(data);
+        html = html.replace("</body>",jsStr+"</body>");
+
         //有数据则返回HTML字符串，没有数据则返回函数 支持data={}的情况
-        return isObject(data) ? fn( data ) : fn;
+        return isObject(data) ? html : fn;
     };
 
     //取得命名空间 baidu.template
@@ -61,9 +68,18 @@
     bt.LEFT_DELIMITER = bt.LEFT_DELIMITER||'<%';
     bt.RIGHT_DELIMITER = bt.RIGHT_DELIMITER||'%>';
 
+    //自定义默认是否转义，默认为默认自动转义
+    bt.ESCAPE = true;
+
     //HTML转义
     bt._encodeHTML = function (source) {
-        return String(source).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\\/g,'&#92;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        return String(source)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(/\\/g,'&#92;')
+            .replace(/"/g,'&quot;')
+            .replace(/'/g,'&#39;');
     };
 
     //转义影响正则的字符
@@ -73,14 +89,22 @@
 
     //转义UI UI变量使用在HTML页面标签onclick等事件函数参数中
     bt._encodeEventHTML = function (source) {
-        return String(source).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/\\/g,'\\').replace(/\//g,'\/').replace(/\n/g,'\n').replace(/\r/g,'\r');
+        return String(source)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;')
+            .replace(/'/g,'&#39;')
+            .replace(/\\/g,'\\\\')
+            .replace(/\//g,'\\\/')
+            .replace(/\n/g,'\\n')
+            .replace(/\r/g,'\\r');
     };
 
     //将字符串拼接生成函数，即编译过程(compile)
     var compile = function(str){
-        return new Function("_template_object",
-            "var _template_fun_array=[];\nwith(_template_object){\n_template_fun_array.push('"+analysisStr(str)+"');\n}\nreturn _template_fun_array.join('');"
-        );
+        var funBody = "var _template_fun_array=[];\n(function(data){\nvar _template_varName='';\nfor(name in data){\n_template_varName+=('var '+name+'=data[\"'+name+'\"];');\n};\neval(_template_varName);\n_template_fun_array.push('"+analysisStr(str)+"');\n})(_template_object);\nreturn _template_fun_array.join('');\n";
+        return new Function("_template_object",funBody);
     };
 
     //判断是否是Object类型
@@ -99,7 +123,12 @@
         var _left = bt._encodeReg(_left_);
         var _right = bt._encodeReg(_right_);
 
-        str=String(str)
+        str = String(str).replace(/<script\s+type\s*=\s*['|"]text\/javascript['|"]\s*>[\s\S]*?<\/script>/g,function(item,$1){
+           jsStr += (item+'\n');
+           return '';
+        });
+        console.log(jsStr+"\n\n");
+        str = str
             
             //去掉分隔符中js注释
             .replace(new RegExp("("+_left+"[^"+_right+"]*)//.*\n","g"), "$1")
@@ -138,12 +167,29 @@
 
             //按照 <% 分割为一个个数组，再用 \t 和在一起，相当于将 <% 替换为 \t
             //将模板按照<%分为一段一段的，再在每段的结尾加入 \t,即用 \t 将每个模板片段前面分隔开
-            .split(_left_).join("\t")
+            .split(_left_).join("\t");
 
-            //找到 \t=任意一个字符%> 替换为 ‘，任意字符,'
-            //即替换简单变量  \t=data%> 替换为 ',data,'
-            //默认HTML转义  也支持HTML转义写法<%:h=value%>  
-            .replace(new RegExp("\\t(?::h)?=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':$1,'")
+        //支持用户配置默认是否自动转义
+        if(bt.ESCAPE){
+            str = str
+
+                //找到 \t=任意一个字符%> 替换为 ‘，任意字符,'
+                //即替换简单变量  \t=data%> 替换为 ',data,'
+                //默认HTML转义  也支持HTML转义写法<%:h=value%>  
+                //.replace(new RegExp("\\t=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':baidu.template._encodeHTML($1),'");
+                .replace(new RegExp("\\t=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':$1,'");
+        }else{
+            str = str
+                
+                //默认不转义HTML转义
+                .replace(new RegExp("\\t=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':$1,'");
+        };
+
+        str = str
+
+            //支持HTML转义写法<%:h=value%>  
+            //.replace(new RegExp("\\t:h=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':baidu.template._encodeHTML($1),'")
+            .replace(new RegExp("\\t:h=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':$1,'")
 
             //支持不转义写法 <%:=value%>和<%-value%>
             .replace(new RegExp("\\t(?::=|-)(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':$1,'")
@@ -152,6 +198,7 @@
             .replace(new RegExp("\\t:u=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':encodeURIComponent($1),'")
 
             //支持UI 变量使用在HTML页面标签onclick等事件函数参数中  <%:v=value%>
+            //.replace(new RegExp("\\t:v=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':baidu.template._encodeEventHTML($1),'")
             .replace(new RegExp("\\t:v=(.*?)"+_right,"g"),"',typeof($1)==='undefined'?'':$1,'")
 
             //将字符串按照 \t 分成为数组，在用'); 将其合并，即替换掉结尾的 \t 为 ');
@@ -166,7 +213,7 @@
 
             //将 \r 替换为 \
             .split("\r").join("\\'");
-            
+        
         return str;
     };
 

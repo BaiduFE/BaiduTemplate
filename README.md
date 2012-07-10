@@ -28,7 +28,8 @@
 
 ####如果想要在nodejs环境中使用，可以通过npm安装
 	
-	npm install baiduTemplate
+	//注意名字全部小写
+	npm install baidutemplate
 
 ###1、放置模板片段：
 
