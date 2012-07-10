@@ -1,3 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="keywords" content="baidu template" />
+<meta name="description" content="javascript前端模板" />
+<title>test</title>
+<script type="text/javascript" src="./baiduTemplate.js"></script>
+</head>
+<body>
+	<h3>BaiduTemplate单元测试用例</h3>
+<script type="text/javascript">
+//nodejs测试1
+function test(){
+	alert('test');
+};
+test();
+</script>
+
+<!-- 测试模板1开始 -->
+<script id='t:_1234-abcd-1' type="text/template">
 <br>
 1、基本输出（自动HTML转义）：  <%=value1%> 
 <br>
@@ -62,3 +83,26 @@
 16、a标签 <br>
 单引问题：<a target='_blank' href='http://www.baidu.com ' onclick='alert("test");'>test</a><br>
 双引问题：<a target="_blank" href="http://www.baidu.com" onclick="alert('test');">test</a><br>
+
+</script>
+<!-- 测试模板1结束 -->
+
+<div id="results"></div>
+
+<script type="text/javascript">
+//nodejs测试2
+function test(){
+	alert('test');
+};
+test();
+</script>
+<script type="text/javascript">
+//nodejs测试3
+function test(){
+	alert('test');
+};
+test();
+</script>
+
+</body>
+</html>

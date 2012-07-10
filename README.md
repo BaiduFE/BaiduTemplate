@@ -28,7 +28,8 @@
 
 ####如果想要在nodejs环境中使用，可以通过npm安装
 	
-	npm install baiduTemplate
+	//注意名字全部小写
+	npm install baidutemplate
 
 ###1、放置模板片段：
 
@@ -224,6 +225,9 @@
 	</html>
 
 ##四、change log
+
+###1.0.4：
+	经过第三方测试反馈，进行对编译后产生的函数性能优化，性能提高1/3以上
 
 ###1.0.3：
 	通过产品线反馈，经过讨论增加自定义是否默认转义接口 baidu.template.ESCAPE
