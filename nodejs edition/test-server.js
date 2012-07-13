@@ -1,5 +1,5 @@
 var fs = require('fs');
-var baidu = require('baiduTemplate');
+var baidu = require('./baiduTemplate.js');
 
 fs.readFile('test.tpl',function(err,data){
 	var tpl = data;
@@ -21,6 +21,6 @@ fs.readFile('test.tpl',function(err,data){
 			value16:['<b>这是value</b>',123,'<b>http://wangxiao.github.com/BaiduTemplate/</b>'],
 			value17:['<b>这是value</b>',123,'<b>http://wangxiao.github.com/BaiduTemplate/</b>']
 		};
-	var fun = baidu.template(tpl);
-	console.log(fun(data));
+	var html = baidu.template(tpl,data);
+	console.log(html);
 });
