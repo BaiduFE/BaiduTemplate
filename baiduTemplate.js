@@ -1,8 +1,9 @@
 /**
- * baiduTemplate简单好用的Javascript模板引擎 1.0.4 版本
+ * baiduTemplate简单好用的Javascript模板引擎 1.0.5 版本
+ * http://baidufe.github.com/BaiduTemplate
  * 开源协议：BSD License
- * 浏览器环境占用命名空间 baidu.template ，nodejs环境直接安装 npm install baiduTemplate
- * @param str{String|HtmlElement} dom结点ID,dom，或者模板string
+ * 浏览器环境占用命名空间 baidu.template ，nodejs环境直接安装 npm install baidutemplate
+ * @param str{String} dom结点ID，或者模板string
  * @param data{Object} 需要渲染的json对象，可以为空。当data为{}时，仍然返回html。
  * @return 如果无data，直接返回编译后的函数；如果有data，返回html。
  * @author wangxiao 
@@ -14,15 +15,15 @@
     //取得浏览器环境的baidu命名空间，非浏览器环境符合commonjs规范exports出去
     var baidu = typeof module === 'undefined' ? (this.baidu = this.baidu || {}) : module.exports;
 
-    //模板函数
-    var bt = function(str, data){
+    //模板函数（放置于baidu.template命名空间下）
+    baidu.template = function(str, data){
 
         //检查是否有该id的元素存在，如果有元素则获取元素的innerHTML/value，否则认为字符串为模板
         var fn = (function(){
 
             //判断如果没有document，则为非浏览器环境
             if(!this.document){
-                return compile(str);
+                return bt._compile(str);
             };
 
             //HTML5规定ID可以由任何不包含空格字符的字符串组成
@@ -30,32 +31,35 @@
             if (element) {
                     
                 //取到对应id的dom，缓存其编译后的HTML模板函数
-                if (cache[str]) {
-                    return cache[str];
+                if (bt.cache[str]) {
+                    return bt.cache[str];
                 };
 
                 //textarea或input则取value，其它情况取innerHTML
                 var html = /^(textarea|input)$/i.test(element.nodeName) ? element.value : element.innerHTML;
-                return compile(html);
+                return bt._compile(html);
 
             }else{
 
                 //是模板字符串，则生成一个函数
                 //如果直接传入字符串作为模板，则可能变化过多，因此不考虑缓存
-                return compile(str);
+                return bt._compile(str);
             };
 
         })();
 
         //有数据则返回HTML字符串，没有数据则返回函数 支持data={}的情况
-        return isObject(data) ? fn( data ) : fn;
+        var result = bt._isObject(data) ? fn( data ) : fn;
+        fn = null;
+
+        return result;
     };
 
     //取得命名空间 baidu.template
-    baidu.template = bt;
+    bt = baidu.template;
 
     //缓存  将对应id模板生成的函数缓存下来。
-    var cache = {};
+    bt.cache = {};
     
     //自定义分隔符，可以含有正则中的字符，可以是HTML注释开头 <! !>
     bt.LEFT_DELIMITER = bt.LEFT_DELIMITER||'<%';
@@ -88,25 +92,25 @@
             .replace(/>/g,'&gt;')
             .replace(/"/g,'&quot;')
             .replace(/'/g,'&#39;')
-            .replace(/\\/g,'\\\\')
-            .replace(/\//g,'\\\/')
-            .replace(/\n/g,'\\n')
-            .replace(/\r/g,'\\r');
+            .replace(/\\\\/g,'\\')
+            .replace(/\\\//g,'\/')
+            .replace(/\\n/g,'\n')
+            .replace(/\\r/g,'\r');
     };
 
     //将字符串拼接生成函数，即编译过程(compile)
-    var compile = function(str){
-        var funBody = "var _template_fun_array=[];\n(function(data){\nvar _template_varName='';\nfor(name in data){\n_template_varName+=('var '+name+'=data[\"'+name+'\"];');\n};\neval(_template_varName);\n_template_fun_array.push('"+analysisStr(str)+"');\n})(_template_object);\nreturn _template_fun_array.join('');\n";
+    bt._compile = function(str){
+        var funBody = "var _template_fun_array=[];\nvar fn=(function(data){\nvar _template_varName='';\nfor(name in data){\n_template_varName+=('var '+name+'=data[\"'+name+'\"];');\n};\neval(_template_varName);\n_template_fun_array.push('"+bt._analysisStr(str)+"');\n_template_varName=null;\n})(_template_object);\nfn = null;\nreturn _template_fun_array.join('');\n";
         return new Function("_template_object",funBody);
     };
 
     //判断是否是Object类型
-    var isObject = function (source) {
+    bt._isObject = function (source) {
         return 'function' === typeof source || !!(source && 'object' === typeof source);
     };
 
     //解析模板字符串
-    var analysisStr = function(str){
+    bt._analysisStr = function(str){
 
         //取得分隔符
         var _left_ = bt.LEFT_DELIMITER;
