@@ -749,7 +749,7 @@ header p {
 #banner .downloads {
   float: right;
   margin: 0 45px 0 0;
-  width: 435px;
+  width: 440px;
 }
 #banner .downloads span {
   float: left;
@@ -918,6 +918,7 @@ footer {
   }
   header p {
     display: none;
+    margin-top: 10px;
   }
 
   #banner {
