@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/BaiduFE/BaiduTemplate.png)](http://travis-ci.org/BaiduFE/BaiduTemplate)
 百度JS模板引擎 baiduTemplate 1.0.5 版 文档
 ==========================
 
