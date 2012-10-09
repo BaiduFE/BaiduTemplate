@@ -10,10 +10,11 @@
  * @email 1988wangxiao@gmail.com
 */
 
-;(function(){
+;(function(window){
 
     //取得浏览器环境的baidu命名空间，非浏览器环境符合commonjs规范exports出去
-    var baidu = typeof module === 'undefined' ? (this.baidu = this.baidu || {}) : module.exports;
+    //修正在nodejs环境下，采用baiduTemplate变量名
+    var baidu = typeof module === 'undefined' ? (window.baidu = window.baidu || {}) : module.exports;
 
     //模板函数（放置于baidu.template命名空间下）
     baidu.template = function(str, data){
@@ -22,7 +23,7 @@
         var fn = (function(){
 
             //判断如果没有document，则为非浏览器环境
-            if(!this.document){
+            if(!window.document){
                 return bt._compile(str);
             };
 
@@ -206,4 +207,4 @@
         return str;
     };
 
-})();
+})(window);
