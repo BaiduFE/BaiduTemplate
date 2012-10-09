@@ -13,7 +13,7 @@
 ;(function(window){
 
     //取得浏览器环境的baidu命名空间，非浏览器环境符合commonjs规范exports出去
-    //修正在nodejs环境下，采用baiduTemplate变量名
+    //修正在nodejs环境下，采用baidu.template变量名
     var baidu = typeof module === 'undefined' ? (window.baidu = window.baidu || {}) : module.exports;
 
     //模板函数（放置于baidu.template命名空间下）
@@ -121,7 +121,7 @@
         var _left = bt._encodeReg(_left_);
         var _right = bt._encodeReg(_right_);
 
-        str=String(str)
+        str = String(str)
             
             //去掉分隔符中js注释
             .replace(new RegExp("("+_left+"[^"+_right+"]*)//.*\n","g"), "$1")
@@ -150,14 +150,23 @@
                     str = item;
                 }
                 return str ;
-            })
+            });
+
+
+        str = str 
+            //定义变量，如果没有分号，需要容错  <%var val='test'%>
+            .replace(new RegExp("("+_left+"[\\s]*?var[\\s]*?.*?[\\s]*?[^;])[\\s]*?"+_right,"g"),"$1;"+_right_);
+
+        console.log('1:'+str);
+
+        str = str 
 
             //对变量后面的分号做容错(包括转义模式 如<%:h=value%>)  <%=value;%> 排除掉函数的情况 <%fun1();%> 排除定义变量情况  <%var val='test';%>
-            .replace(new RegExp("("+_left+":?[hvu]?[\\s]*?=[\\s]*?[^;|"+_right+"]*?);[\\s]*?"+_right,"g"),"$1"+_right_)
+            .replace(new RegExp("("+_left+":?[hvu]?[\\s]*?=[\\s]*?[^;|"+_right+"]*?);[\\s]*?"+_right,"g"),"$1"+_right_);
 
-            //定义变量，如果没有分号，需要容错  <%var val='test'%>
-            .replace(new RegExp("("+_left+"[\\s]*?var[\\s]*?.*?[\\s]*?[^;])[\\s]*?"+_right,"g"),"$1;"+_right_)
+        console.log('0:'+str);
 
+        str = str 
             //按照 <% 分割为一个个数组，再用 \t 和在一起，相当于将 <% 替换为 \t
             //将模板按照<%分为一段一段的，再在每段的结尾加入 \t,即用 \t 将每个模板片段前面分隔开
             .split(_left_).join("\t");
@@ -176,6 +185,8 @@
                 //默认不转义HTML转义
                 .replace(new RegExp("\\t=(.*?)"+_right,"g"),"',typeof($1) === 'undefined'?'':$1,'");
         };
+
+        console.log('2:'+str);
 
         str = str
 
@@ -203,7 +214,7 @@
 
             //将 \r 替换为 \
             .split("\r").join("\\'");
-            
+
         return str;
     };
 
