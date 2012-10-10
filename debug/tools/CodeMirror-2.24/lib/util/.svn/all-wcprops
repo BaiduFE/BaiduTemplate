@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util
+END
+loadmode.js
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/loadmode.js
+END
+search.js
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/search.js
+END
+simple-hint.css
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/simple-hint.css
+END
+javascript-hint.js
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/javascript-hint.js
+END
+match-highlighter.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/match-highlighter.js
+END
+runmode.js
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/runmode.js
+END
+simple-hint.js
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/simple-hint.js
+END
+formatting.js
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/formatting.js
+END
+dialog.css
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/dialog.css
+END
+dialog.js
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/dialog.js
+END
+foldcode.js
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/foldcode.js
+END
+closetag.js
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/closetag.js
+END
+overlay.js
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/overlay.js
+END
+searchcursor.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/lib/util/searchcursor.js
+END

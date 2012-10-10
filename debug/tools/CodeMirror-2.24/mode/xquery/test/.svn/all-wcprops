@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test
+END
+testMultiAttr.js
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test/testMultiAttr.js
+END
+testBase.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test/testBase.js
+END
+testEmptySequenceKeyword.js
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test/testEmptySequenceKeyword.js
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test/index.html
+END
+testNamespaces.js
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test/testNamespaces.js
+END
+testQuotes.js
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test/testQuotes.js
+END
+testProcessingInstructions.js
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/tangram/!svn/ver/44/1/tpl/Public/tools/CodeMirror-2.24/mode/xquery/test/testProcessingInstructions.js
+END
