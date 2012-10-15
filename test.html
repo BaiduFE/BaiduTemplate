@@ -9,7 +9,6 @@
 </head>
 <body>
 	<h3>BaiduTemplate单元测试用例</h3>
-
 <!-- 测试模板1开始 -->
 <script id='t:_1234-abcd-1' type="text/template">
 <br>
@@ -76,7 +75,14 @@
 16、a标签 <br>
 单引问题：<a target='_blank' href='http://www.baidu.com ' onclick='alert("test");'>test</a><br>
 双引问题：<a target="_blank" href="http://www.baidu.com" onclick="alert('test');">test</a><br>
-
+17、定义变量：
+<%var varTest1 = value1%>
+varTest1:  <%=varTest1;%>
+<br>
+18、定义变量容错：
+<%var varTest2 = value2;%>
+varTest2:  <%=varTest2%>
+<br>
 </script>
 <!-- 测试模板1结束 -->
 
