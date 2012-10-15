@@ -1,0 +1,103 @@
+h1{
+	line-height:35px;
+	font-size: 23px;
+	font-family: Arial;
+}
+h2{
+	line-height:20px;
+	color: #999;
+	font-size: 10px;
+	font-family: Arial;
+}
+
+code, pre {
+	color:#ddd;
+}
+
+.CodeMirror{
+	font-family: 'Monaco', courier, monospace;	
+	font-size:15px;
+	line-height:20px;
+}
+
+#_tangram_debug_panel{
+	width:1080px;
+	height:345px;
+	margin:0 auto;
+	overflow:hidden;
+	position:relative;	
+}
+
+#_tangram_debug_panel .editor_tab{
+	width:1000px;
+	height:300px;
+	font-size:18px;
+	line-height:20px;
+}
+
+#_tangram_debug_panel .editor_tab .focus .CodeMirror-scroll{
+	background-color: #000;
+}
+
+#_tangram_debug_toolbar{
+	height:34px;
+	width:1078px;
+	background-color:#f3f3f3;
+	border: 1px solid #bdbdbd;
+	padding-top:5px;
+	margin:0 auto;
+}
+
+#_tangram_debug_fileList{
+	display:inline-block;
+	position: absolute;
+	left:15px;
+	top:4px;
+}
+
+#_tangram_debug_allEditor{
+	position: absolute;
+	top:42px;
+	left:0px;
+}
+
+#_tangram_debug_html{
+	position: absolute;
+	top:0px;
+	left:0px;
+}
+
+#_tangram_debug_css{
+	position: absolute;
+	top:0px;
+	left:1000px;
+}
+
+#_tangram_debug_javascript{
+	position: absolute;
+	top:0px;
+	left:1040px;
+}
+
+#_tangram_debug_result{
+	width:1077px;
+	height:300px;
+	border:1px solid #bdbdbd;
+}
+
+#_tangram_debug_modal{
+	display: none;
+}
+
+#_tangram_debug_btn_html{
+	margin-left:330px;
+}
+
+#_tangram_debug_btn_reset{
+	margin-left:400px;
+}
+
+#_tangram_debug_btn_save{
+	margin-left:40px;
+}
+
