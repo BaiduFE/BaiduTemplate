@@ -22,14 +22,12 @@
 
       <div id="banner">
         <span id="logo"></span>
-
-        
         <div class="downloads">
           <span>欢迎使用</span>
           <ul>
-            <li><a href="https://github.com/wangxiao/BaiduTemplate/zipball/master" class="button">下载</a></li>
+            <li><a href="https://raw.github.com/wangxiao/BaiduTemplate/master/baiduTemplate.js" class="button">下载</a></li>
             <li><a target='_blank' href="https://github.com/wangxiao/BaiduTemplate" class="button">查看GitHub</a></li>
-            <li><a target='_blank' href="http://tangram.sinaapp.com/?m=demo&index=cda9a047d1bd7d32a9b87efb40572c8c" class="button">在线体验</a></li>
+            <li><a target='_blank' href="./debug/" class="button">在线体验</a></li>
             <li><a target='_blank' href="http://weibo.com/baidujs" class="button">关注我们</a></li>
           </ul>
         </div>
@@ -40,7 +38,7 @@
         <ul></ul>
       </nav>
       <section>
-        <h1>百度JS模板引擎 baiduTemplate 1.0.5 版</h1>
+        <h1>百度JS模板引擎 baiduTemplate 1.0.6 版</h1>
 <br>
 <h2>A、baiduTemplate 简介</h2>
 <h3>0、baiduTemplate希望创造一个用户觉得“简单好用”的JS模板引擎</h3>
@@ -309,7 +307,25 @@ document.getElementById('result').innerHTML=html;
 &lt;/html&gt;
 </code></pre>
 
-<h2>D、change log</h2>
+<h2>D、性能相关数据</h2>
+
+<h4>前端模板引擎在传统桌面电脑的浏览器端编译模板并渲染页面，无较大的性能开销。但在移动端上面，性能数据较为重要，故发布移动端性能数据列表，希望能够给各位开发者提供一个参考。</h4>
+
+<img style="border:1px solid #666;" src="./images/mobi-performance.png" />
+<br>
+<br>
+<h4>总结：编译执行时间（前端模版编译以及json被转换为html字符串的时间）范围约在10~90毫秒，大部分集中在20~60毫秒之间。Dom渲染时间（html字符串通过dom.innerHTML被插入到div里的时间）范围约在40~160毫秒，大部分集中在50~130毫秒之间。测试页面（50条数据记录）：http://tieba.baidu.com/tb/test/s.html（数据在页面多次刷新时会有一些小范围浮动，只反映大致情况，2012-09-20 百度贴吧整理）
+
+<h2 style="color:#800;">E、特别鸣谢</h2>
+<h4 style="color:#800;">感谢各位业内的高手们对baiduTemplate的帮助！</h4>
+<h4 style="color:#800;">感谢百度贴吧的大力支持，并且给出了移动端的测试数据，目前baiduTemplate使用在贴吧等百度移动端的产品上面，特别感谢这些产品的工程师们，也感谢各位业内使用者们！</h4>
+<h4 style="color:#800;">感谢 @灰大、感谢 @王集鵠、感谢 @黄志龙、感谢 @严孙荣、感谢 @berg、感谢 @黄方荣、感谢 @rayi-、感谢 @东杰、感谢 @杨尊程、感谢 @冯威风、感谢 @糖饼、感谢 @风之石 、感谢 @貘大等等，感谢各位在使用的开发者们！</h4>
+
+<h2>F、change log</h2>
+
+<h3>1.0.6版本</h3>
+
+<h4>重构代码，修正自定义变量加分号语法错误的bug</h4>
 
 <h3>1.0.5版本</h3>
 

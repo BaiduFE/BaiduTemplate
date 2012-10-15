@@ -2,76 +2,293 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<meta name="keywords" content="baidu template" />
-<meta name="description" content="javascript前端模板" />
-<title>test</title>
-<link rel="stylesheet" type="text/css" href="./css/style.css">
-<script type="text/javascript" src="./js/baiduTemplate.js"></script>
+<meta name="keywords" content="tangram在线调试器" />
+<meta name="description" content="tangram在线调试器" />
+<title>Tangram前端调试器</title>
+<link rel="stylesheet" type="text/css" href="./tools/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./tools/CodeMirror-2.24/lib/codemirror.css">
+<link rel="stylesheet" type="text/css" href="./tools/CodeMirror-2.24/theme/blackboard.css">
+<link rel="stylesheet" type="text/css" href="./css/demo-style.css">
 </head>
 <body>
-	<h2>baiduTemplate 简单在线调试页面 </h2>
-	<div class='left'>
-		<h3>以下填入模板：</h3>
-		<textarea id='tpl'></textarea>
-		<h3>以下填入data（JSON）</h3>
-		<h3>var data={</h3>
-		<textarea id='data'></textarea>
-		<div id='submit_btn'>点此执行</div>
-		<h3>};</h3>
-	</div>
-	<div class='right'>
-		<div class='left'>
-			<h3>输出的HTML片段或函数</h3>
-			<textarea id='result1'></textarea>
+	<!-- 调试显示结果容器 -->
+	<center>
+		<h1>Tangram 前端代码在线调试器</h1>
+		<h2>做“简单好用”的在线编辑器，让你的代码
+			<span style='color:#ef2b31;margin-left:-3px;'>舞</span>
+			<span style='color:#f9a600;margin-left:-3px;'>动</span>
+			<span style='color:#00a513;margin-left:-3px;'>起</span>
+			<span style='color:#0054fd;margin-left:-3px;'>来</span>
+		</h2>
+		<iframe id="_tangram_debug_result" name="_tangram_debug_result"></iframe>
+	</center>
+	<!-- 调试显示结果容器 end -->
+
+	<!-- 调试编辑容器 -->
+	<div id="_tangram_debug_panel">
+
+		<!-- 调试按钮工具 -->
+		<div id="_tangram_debug_toolbar">
+
+			<!-- 引用文件列表 -->
+			<div id="_tangram_debug_fileList">
+			   <ul class="nav nav-tabs">
+				<li class="dropdown">
+		          <a class="dropdown-toggle" data-toggle="dropdown">
+		          	引用文件列表
+		          	<b class="caret"></b>
+		          </a>
+		          <ul class="dropdown-menu">
+		          	<li><a>点击"运行"后会分析显示</a></li>
+		          </ul>
+		        </li>
+		      </ul>  
+			</div>
+
+			<!-- 引用文件列表 end -->
+			<a id="_tangram_debug_btn_html" class="btn switch_tab btn-primary disabled">HTML</a>			
+			<a class="btn switch_tab">CSS</a>
+			<a class="btn switch_tab">Javascript</a>
+			<a id="_tangram_debug_btn_reset" class="btn btn-danger">重设</a>
+			<a id="_tangram_debug_btn_run" class="btn btn-success">运行</a>
+			<!-- <a id="_tangram_debug_btn_save" class="btn btn-warning">分享</a> -->
 		</div>
-		<div class='right'>
-			<h3>输出的HTML片段或函数</h3>
-			<div id='result2'></div>			
+		<!-- 调试按钮工具 end -->
+		<div id='_tangram_debug_allEditor'>	
+			<!-- 编辑HTML容器 -->
+			<div id="_tangram_debug_html" class="editor_tab">
+			</div>
+			<!-- 编辑HTML容器 end -->
+
+			<!-- 编辑css容器 -->
+			<div id="_tangram_debug_css" class="editor_tab">
+			</div>
+			<!-- 编辑css容器 end -->
+
+			<!-- 编辑javascript容器 -->
+			<div id="_tangram_debug_javascript" class="editor_tab">
+			</div>
+			<!-- 编辑javascript容器 end -->
+
+			<!-- 用来提交的隐藏form -->
+			<form id="_tangram_debug_form" target="_tangram_debug_result" action="http://tangram.baidu.com/?m=frontData&a=demoEdit" method="post">
+				<input id='_tangram_debug_input_html' type="hidden" name="html">
+				<input id='_tangram_debug_input_css' type="hidden" name="css">
+				<input id='_tangram_debug_input_js' type="hidden" name="js">		
+				<input id='_tangram_debug_input_imports' type="hidden" name="imports">		
+			</form>
+			<!-- 用来提交的隐藏form end -->
 		</div>
 	</div>
+	<!-- 调试编辑容器 end-->
+	<!-- 提示框 -->
+	<div id="_tangram_debug_modal" class="modal">
+	  <div class="modal-header">
+	    <a class="close" data-dismiss="modal">×</a>
+	    <h3 class="msg"></h3>
+	  </div>
+	</div>	
+	<!-- 提示框 end -->
 
-	<script type="text/javascript">
-	window.onload=function(){
-		var tpl=[
-			'<h1><%=title%></h1>\n\n',
-			'<%if(value1){%>\n',
-			'<%=value1%>\n',
-			'<%}else{%>\n',
-			'<%}%>\n\n'
-		].join('');
-
-		var data=[
-			'title:\'BaiduTemplate\',\n',
-			'value1:\'支持HTML转义<script>\'\n'
-		].join('');
-
-		document.getElementById('data').value=data;
-		document.getElementById('tpl').value=tpl;
-		tpl=null;
-		data=null;
-
-		var submit_btn=document.getElementById('submit_btn').addEventListener('click',function(){
-			var temp = document.getElementById('data').value;
-			var tpl = document.getElementById('tpl').value;
-			var data;
-			String(tpl).replace('/^\s*?/g','');
-			String(temp).replace('/^\s*?/g','');
-			if(!tpl){
-				alert('请写个模板，如：<%=value%>');
-				return;
-			};
-			var bt = baidu.template;
-			var html = '';
-			if(temp!=''){
-				eval("data = {"+temp+"};");
-				html = bt(tpl,data);
-			}else{
-				html = bt(tpl);
-			};
-			document.getElementById('result1').innerHTML=html;			
-			document.getElementById('result2').innerHTML=html;			
-		});
-	};
+<!-- 数据 -->
+<textarea id="data0" style="display:none;">
+	<script src="http://wangxiao.github.com/BaiduTemplate/debug/js/baiduTemplate.js"></script>
+		<style type="text/css">
+			#wrap{
+				zoom:1;
+				position:relative;
+				padding:98px 0 0 0;
+				margin:5px 0 0 200px;
+				width:447px;
+				height:418px;
+				background:url("http://firekylin.my.baidu.com/doc/example/images/bg.gif") no-repeat;
+			}
+			#sort{
+				position:absolute;
+				top:80px;
+				left:160px;
+				width:12px;
+				height:12px;
+				overflow:hidden;
+				cursor:pointer;
+			}
+			#sort.up{
+				background:url("http://firekylin.my.baidu.com/doc/example/images/up.gif") no-repeat;
+			}
+			#sort.down{
+				background:url("http://firekylin.my.baidu.com/doc/example/images/down.gif") no-repeat;
+			}
+			#container{
+				margin:0px 0 0 16px;
+				width:411px;
+				height:233px;
+				overflow-x:hidden;
+				overflow-y:auto;
+				font-size:12px;
+			}
+			div.edit, div.normal{
+				overflow:hidden;
+				zoom:1;
+				margin:1px 5px 0 5px;
+				width:401px;
+				height:27px;
+				line-height:28px;
+				border-bottom:1px dashed #fff;
+			}
+			div.normal{
+				border-bottom:1px dashed #ccc;
+			}
+			div.normal:hover{
+				background:#eee;
+			}
+			div.normal img{
+				cursor:pointer;
+			}
+			div.edit{
+				background:#feffda;
+			}
+			div.cell1, div.cell2, div.cell3{
+				float:left;
+				text-align:center;
+			}
+			div.cell1{
+				padding-left:20px;
+				width:191px;
+				text-align:left;
+			}
+			div.cell2{
+				width:70px;
+			}
+			div.cell3{
+				width:120px;
+			}
+			#createDiv{
+				margin:20px 0 0 17px;
+			}
+		</style>	
+	<script type="text/template"  id="teamList">
+		<%for(var i = 0; i<list.length;i++){
+		var item = list[i];
+		%>
+		    <div class="<%=(item.state||"normal")%>">
+		      <%if(item.state == "edit"){%>
+		        <div class="cell1">
+		          <input id="g_<%=item.id%>" value="<%=item.name%>" />
+		        </div>
+		        <div class="cell2">
+		          <button onclick="action.save(<%=item.id%>)">修改</button>
+		        </div>
+		        <div class="cell3">
+		          <button onclick="action.cancel(<%=item.id%>)">取消</button>
+		        </div>
+		      <%}else{%>
+		        <div class="cell1"><%=item.name%></div>
+		        <div class="cell2">
+		          <img src="http://firekylin.my.baidu.com/doc/example/images/edit.gif" onclick="action.edit(<%=item.id%>)" />
+		        </div>
+		        <div class="cell3">
+		          <img src="http://firekylin.my.baidu.com/doc/example/images/delete.gif" onclick="action.del(<%=item.id%>)" />
+		        </div>
+		       <%}%>
+		    </div>
+		 <%}%>
+		</c:client>
 	</script>
+		<div id="wrap">
+			<div id="sort" class="down" onclick="action.sort(data.list, this.className=="up")"></div>
+			<div id="container"></div>
+			<div id="createDiv">
+				<input type="text" id="name" value="" />
+				<input type="button" value="添加一行新数据" onclick="action.create($('name').value);"/>
+			</div>
+		</div>
+	
+		<script type="text/javascript">
+		  //<![CDATA[
+		var data = {
+			"list" : [
+				{"id" : 1,"name" : "数据1"},
+				{"id" : 2,"name" : "数据2"},
+				{"id" : 3,"name" : "数据3"},
+				{"id" : 4,"name" : "数据4"},
+				{"id" : 5,"name" : "数据5"},
+				{"id" : 6,"name" : "数据6"},
+				{"id" : 7,"name" : "数据7"},
+				{"id" : 8,"name" : "数据8"},
+				{"id" : 9,"name" : "数据9"},
+				{"id" : 10,"name" : "数据10"}
+			]
+		}
+		var action = {
+		  sort:function(list, inc){
+		    $("sort").className = inc?"down":"up";
+		    list.sort(function(a, b){
+		      return (inc?1:-1)*a.name.localeCompare(b.name);
+		    });
+		    render(data);
+		  },
+		  create : function(name){
+		    data.list.unshift({id: +new Date(),name: name});
+		    render(data);
+		  },
+		  edit : function(id){
+		    each(data.list, function(value, i){
+		      data.list[i].state = value.id == id ? "edit" : "normal";
+		    });
+		    render(data);
+		  },
+		  del : function(id){
+		    each(data.list, function(value, i){
+		      if(value.id == id){
+		        data.list.splice(i,1);
+		      }
+		    })
+		    render(data);
+		  },
+		  save : function(id){
+		    each(data.list, function(value, i){
+		      if(value.id == id){
+		        value.name = $("g_" + id).value;
+		        value.state = "normal";
+		      }
+		    });
+		    render(data);
+		  },
+		  cancel : function(id){
+		    each(data.list, function(value, i){
+		      data.list[i].state = "normal";
+		    });
+		    render(data);
+		  }
+		}
+		function $(id){
+		  return document.getElementById(id);
+		}
+		function each(obj, fn){
+		  for (var i = 0; i < obj.length; i++) {
+		     fn.call(obj[i], obj[i], i); 
+		  }
+		}
+
+		var teamList = baidu.template('teamList');
+		function render(data){
+		  $("container").innerHTML = teamList(data);
+		}
+
+		window.onload = function(){
+			render(data);
+		}
+		//]]>
+		</script>
+</textarea>
+
+<script type="text/javascript" src="./js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="./tools/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./tools/CodeMirror-2.24/lib/codemirror.js"></script>
+<script src="./tools/CodeMirror-2.24/mode/xml/xml.js"></script>
+<script src="./tools/CodeMirror-2.24/mode/javascript/javascript.js"></script>
+<script src="./tools/CodeMirror-2.24/mode/css/css.js"></script>
+<script src="./tools/CodeMirror-2.24/mode/htmlmixed/htmlmixed.js"></script>
+<script type="text/javascript" src="./js/demo-main.js"></script>
 </body>
 </html>
