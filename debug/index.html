@@ -91,81 +91,12 @@
 	<!-- 提示框 end -->
 
 <!-- 数据 -->
-<textarea id="data0" style="display:none;">
+<textarea id="data0-html" style="display:none;">
+
+	<!-- 引入baiduTemplate -->
 	<script src="http://wangxiao.github.com/BaiduTemplate/debug/js/baiduTemplate.js"></script>
-		<style type="text/css">
-			#wrap{
-				zoom:1;
-				position:relative;
-				padding:98px 0 0 0;
-				margin:5px 0 0 200px;
-				width:447px;
-				height:418px;
-				background:url("http://firekylin.my.baidu.com/doc/example/images/bg.gif") no-repeat;
-			}
-			#sort{
-				position:absolute;
-				top:80px;
-				left:160px;
-				width:12px;
-				height:12px;
-				overflow:hidden;
-				cursor:pointer;
-			}
-			#sort.up{
-				background:url("http://firekylin.my.baidu.com/doc/example/images/up.gif") no-repeat;
-			}
-			#sort.down{
-				background:url("http://firekylin.my.baidu.com/doc/example/images/down.gif") no-repeat;
-			}
-			#container{
-				margin:0px 0 0 16px;
-				width:411px;
-				height:233px;
-				overflow-x:hidden;
-				overflow-y:auto;
-				font-size:12px;
-			}
-			div.edit, div.normal{
-				overflow:hidden;
-				zoom:1;
-				margin:1px 5px 0 5px;
-				width:401px;
-				height:27px;
-				line-height:28px;
-				border-bottom:1px dashed #fff;
-			}
-			div.normal{
-				border-bottom:1px dashed #ccc;
-			}
-			div.normal:hover{
-				background:#eee;
-			}
-			div.normal img{
-				cursor:pointer;
-			}
-			div.edit{
-				background:#feffda;
-			}
-			div.cell1, div.cell2, div.cell3{
-				float:left;
-				text-align:center;
-			}
-			div.cell1{
-				padding-left:20px;
-				width:191px;
-				text-align:left;
-			}
-			div.cell2{
-				width:70px;
-			}
-			div.cell3{
-				width:120px;
-			}
-			#createDiv{
-				margin:20px 0 0 17px;
-			}
-		</style>	
+
+	<!-- 前端模板部分 -->
 	<script type="text/template"  id="teamList">
 		<%for(var i = 0; i<list.length;i++){
 		var item = list[i];
@@ -194,17 +125,96 @@
 		 <%}%>
 		</c:client>
 	</script>
-		<div id="wrap">
-			<div id="sort" class="down" onclick="action.sort(data.list, this.className=="up")"></div>
-			<div id="container"></div>
-			<div id="createDiv">
-				<input type="text" id="name" value="" />
-				<input type="button" value="添加一行新数据" onclick="action.create($('name').value);"/>
-			</div>
+	<!-- 前端模板结束 -->
+
+	<!-- 页面结构 -->
+	<div id="wrap">
+		<div id="sort" class="down" onclick="action.sort(data.list, this.className=="up")"></div>
+		<div id="container"></div>
+		<div id="createDiv">
+			<input type="text" id="name" value="" />
+			<input type="button" value="添加一行新数据" onclick="action.create($('name').value);"/>
 		</div>
-	
-		<script type="text/javascript">
-		  //<![CDATA[
+	</div>
+	<!-- 页面结构结束 -->
+
+</textarea>
+<textarea id="data0-css" style="display:none;">
+#wrap{
+	zoom:1;
+	position:relative;
+	padding:98px 0 0 0;
+	margin:5px 0 0 200px;
+	width:447px;
+	height:418px;
+	background:url("http://firekylin.my.baidu.com/doc/example/images/bg.gif") no-repeat;
+}
+#sort{
+	position:absolute;
+	top:80px;
+	left:160px;
+	width:12px;
+	height:12px;
+	overflow:hidden;
+	cursor:pointer;
+}
+#sort.up{
+	background:url("http://firekylin.my.baidu.com/doc/example/images/up.gif") no-repeat;
+}
+#sort.down{
+	background:url("http://firekylin.my.baidu.com/doc/example/images/down.gif") no-repeat;
+}
+#container{
+	margin:0px 0 0 16px;
+	width:411px;
+	height:233px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	font-size:12px;
+}
+div.edit, div.normal{
+	overflow:hidden;
+	zoom:1;
+	margin:1px 5px 0 5px;
+	width:401px;
+	height:27px;
+	line-height:28px;
+	border-bottom:1px dashed #fff;
+}
+div.normal{
+	border-bottom:1px dashed #ccc;
+}
+div.normal:hover{
+	background:#eee;
+}
+div.normal img{
+	cursor:pointer;
+}
+div.edit{
+	background:#feffda;
+}
+div.cell1, div.cell2, div.cell3{
+	float:left;
+	text-align:center;
+}
+div.cell1{
+	padding-left:20px;
+	width:191px;
+	text-align:left;
+}
+div.cell2{
+	width:70px;
+}
+div.cell3{
+	width:120px;
+}
+#createDiv{
+	margin:20px 0 0 17px;
+}
+</textarea>
+<textarea id="data0-js" style="display:none;">
+	//<![CDATA[
+		//前端模板数据部分
 		var data = {
 			"list" : [
 				{"id" : 1,"name" : "数据1"},
@@ -219,6 +229,8 @@
 				{"id" : 10,"name" : "数据10"}
 			]
 		}
+
+		//业务逻辑部分
 		var action = {
 		  sort:function(list, inc){
 		    $("sort").className = inc?"down":"up";
@@ -279,7 +291,6 @@
 			render(data);
 		}
 		//]]>
-		</script>
 </textarea>
 
 <script type="text/javascript" src="./js/jquery-1.8.2.js"></script>
