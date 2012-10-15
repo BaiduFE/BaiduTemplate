@@ -92,7 +92,10 @@
 
 <!-- 数据 -->
 <textarea id="data0-html" style="display:none;">
+
+	<!-- 引入baiduTemplate -->
 	<script src="http://wangxiao.github.com/BaiduTemplate/debug/js/baiduTemplate.js"></script>
+
 	<!-- 前端模板部分 -->
 	<script type="text/template"  id="teamList">
 		<%for(var i = 0; i<list.length;i++){
@@ -124,14 +127,16 @@
 	</script>
 	<!-- 前端模板结束 -->
 
-		<div id="wrap">
-			<div id="sort" class="down" onclick="action.sort(data.list, this.className=="up")"></div>
-			<div id="container"></div>
-			<div id="createDiv">
-				<input type="text" id="name" value="" />
-				<input type="button" value="添加一行新数据" onclick="action.create($('name').value);"/>
-			</div>
+	<!-- 页面结构 -->
+	<div id="wrap">
+		<div id="sort" class="down" onclick="action.sort(data.list, this.className=="up")"></div>
+		<div id="container"></div>
+		<div id="createDiv">
+			<input type="text" id="name" value="" />
+			<input type="button" value="添加一行新数据" onclick="action.create($('name').value);"/>
 		</div>
+	</div>
+	<!-- 页面结构结束 -->
 
 </textarea>
 <textarea id="data0-css" style="display:none;">
