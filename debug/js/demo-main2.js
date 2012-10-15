@@ -1,18 +1,5 @@
 $(function(){
 
-//页面加载次数
-var pageView = 0;
-
-//数据
-var data0 = {
-	html:"",
-	js:"",
-	css:"",
-	imports:"http://wangxiao.github.com/BaiduTemplate/debug/js/baiduTemplate.js"
-};
-
-data0.html = $('#data0').val();
-
 //工具栏上按钮
 var tabs = $('#_tangram_debug_toolbar .switch_tab');
 
@@ -193,11 +180,10 @@ $('#_tangram_debug_btn_run').click(function(){
 	$('#_tangram_debug_input_js').val(js);
 	$('#_tangram_debug_input_imports').val(imports);
 
-	var form = $('#_tangram_debug_form');
-	//form.attr('action','http://tangram.baidu.com/?m=frontData&a=demoEdit');
 
+	var form = $('#_tangram_debug_form');
+	form.attr('action','http://tangram.baidu.com/?m=frontData&a=demoEdit');
 	form.submit();
-	pageView ++;
 });
 
 //分析HTML
@@ -243,8 +229,6 @@ function setImportsList(html){
 	}
 	if(urlList.length>0){
 		$('#_tangram_debug_fileList .dropdown-menu').html(tempStr);
-	}else if(pageView > 0){
-		$('#_tangram_debug_fileList .dropdown-menu a').text('无');
 	}
 }
 
@@ -255,20 +239,93 @@ $('#_tangram_debug_modal').modal({
     show:false
 });
 
+//点击”保存“按键
+$('#_tangram_debug_btn_save').click(function(){
+	var html = htmlEditor.getValue();
+	var css = cssEditor.getValue();
+	var js = javascriptEditor.getValue();
+	var data = {
+		html:html,
+		css:css,
+		js:js
+	};
+	$.ajax({
+	   type: "POST",
+	   url: "?m=demo&a=save",
+	   dataType:"json",
+	   data: data,
+	   success: function(msg){
+	   	  if(msg.err == -1){
+	   	  	  var modal = $('#_tangram_debug_modal');
+	   	  	  var html = "分享地址：<br><a target='_blank' href='http://tangram.sinaapp.com/?m=demo&index="+msg.index+"'>http://tangram.sinaapp.com/?m=demo&index="+msg.index+"</a>";
+			  $('#_tangram_debug_modal').children().children('h3').html(html);
+			  modal.modal('show');
+	   	  }else if(msg.err == 1){
+	   	  	  var modal = $('#_tangram_debug_modal');
+	   	  	  var html = "存储失败";
+			  $('#_tangram_debug_modal').children().children('h3').html(html);
+	   	  	  modal.modal('show');
+	   	  }
+	   }
+
+	 });
+});
+
+//分析url
+function analyzeUrl(){
+	var params = String(location.search);
+	//请求demo
+	if(/p=/.test(params)){
+		params = params.replace(/\?m=demo(.*)/g,"?m=demo&a=getsrc$1");
+	}
+	//请求已保存
+	else if(/index=/.test(params)){
+		params = params.replace(/\?m=demo(.*)/g,"?m=demo&a=getsave$1");
+	}else if(/edit/.test(params)){
+
+	}
+	return params;
+}
+
+//取数据
+function getData(){
+	var params = analyzeUrl();
+	$.ajax({
+		url: params,
+		dataType:"json",
+		success: function(data) {
+			//将问题都写到页面上的dilog内
+			if(data.err==1){
+	   	  	  var modal = $('#_tangram_debug_modal');
+	   	  	  var html = data.msg;
+	   	  	  modal.children('h3').html(html);
+	   	  	  modal.modal('show');
+			}else if(data.err == -1||data=={}){
+				distributeData(data);
+			}
+			//重置数据
+			$("#_tangram_debug_btn_reset").click(function(){
+				distributeData(data);
+			});
+		}
+	});
+};
+getData();
+
 //处理数据
 function distributeData(data){
 	htmlEditor.setValue(data.html);
 	cssEditor.setValue(data.css);
 	javascriptEditor.setValue(data.js);
 	setImportsList(data.imports);
-	// var css = "\n<style  type='text/css'>"+data.css+"</style>\n";
-	// var js = "\n<script type='text/javascript'>"+data.js+"</script>\n";
-	// var html = data.html ;
+	var css = "\n<style  type='text/css'>"+data.css+"</style>\n";
+	var js = "\n<script type='text/javascript'>"+data.js+"</script>\n";
+	var html = data.html ;
 
-	// $("#_tangram_debug_btn_run").click(function(){
-	// 	window.frames["_tangram_debug_result"].document.body.innerHTML = css + html +js;	 
-	// });	
+	$("#_tangram_debug_btn_run").click(function(){
+		window.frames["_tangram_debug_result"].document.body.innerHTML = css + html +js;	 
+	});	
 };
-distributeData(data0);
+
 
 });

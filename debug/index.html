@@ -39,7 +39,7 @@
 		          	<b class="caret"></b>
 		          </a>
 		          <ul class="dropdown-menu">
-		          	<li><a>无</a></li>
+		          	<li><a>点击"运行"后会分析显示</a></li>
 		          </ul>
 		        </li>
 		      </ul>  
@@ -71,7 +71,7 @@
 			<!-- 编辑javascript容器 end -->
 
 			<!-- 用来提交的隐藏form -->
-			<form id="_tangram_debug_form" target="_tangram_debug_result" method="post">
+			<form id="_tangram_debug_form" target="_tangram_debug_result" action="http://tangram.baidu.com/?m=frontData&a=demoEdit" method="post">
 				<input id='_tangram_debug_input_html' type="hidden" name="html">
 				<input id='_tangram_debug_input_css' type="hidden" name="css">
 				<input id='_tangram_debug_input_js' type="hidden" name="js">		
@@ -89,6 +89,198 @@
 	  </div>
 	</div>	
 	<!-- 提示框 end -->
+
+<!-- 数据 -->
+<textarea id="data0" style="display:none;">
+	<script src="http://wangxiao.github.com/BaiduTemplate/debug/js/baiduTemplate.js"></script>
+		<style type="text/css">
+			#wrap{
+				zoom:1;
+				position:relative;
+				padding:98px 0 0 0;
+				margin:5px 0 0 200px;
+				width:447px;
+				height:418px;
+				background:url("http://firekylin.my.baidu.com/doc/example/images/bg.gif") no-repeat;
+			}
+			#sort{
+				position:absolute;
+				top:80px;
+				left:160px;
+				width:12px;
+				height:12px;
+				overflow:hidden;
+				cursor:pointer;
+			}
+			#sort.up{
+				background:url("http://firekylin.my.baidu.com/doc/example/images/up.gif") no-repeat;
+			}
+			#sort.down{
+				background:url("http://firekylin.my.baidu.com/doc/example/images/down.gif") no-repeat;
+			}
+			#container{
+				margin:0px 0 0 16px;
+				width:411px;
+				height:233px;
+				overflow-x:hidden;
+				overflow-y:auto;
+				font-size:12px;
+			}
+			div.edit, div.normal{
+				overflow:hidden;
+				zoom:1;
+				margin:1px 5px 0 5px;
+				width:401px;
+				height:27px;
+				line-height:28px;
+				border-bottom:1px dashed #fff;
+			}
+			div.normal{
+				border-bottom:1px dashed #ccc;
+			}
+			div.normal:hover{
+				background:#eee;
+			}
+			div.normal img{
+				cursor:pointer;
+			}
+			div.edit{
+				background:#feffda;
+			}
+			div.cell1, div.cell2, div.cell3{
+				float:left;
+				text-align:center;
+			}
+			div.cell1{
+				padding-left:20px;
+				width:191px;
+				text-align:left;
+			}
+			div.cell2{
+				width:70px;
+			}
+			div.cell3{
+				width:120px;
+			}
+			#createDiv{
+				margin:20px 0 0 17px;
+			}
+		</style>	
+	<script type="text/template"  id="teamList">
+		<%for(var i = 0; i<list.length;i++){
+		var item = list[i];
+		%>
+		    <div class="<%=(item.state||"normal")%>">
+		      <%if(item.state == "edit"){%>
+		        <div class="cell1">
+		          <input id="g_<%=item.id%>" value="<%=item.name%>" />
+		        </div>
+		        <div class="cell2">
+		          <button onclick="action.save(<%=item.id%>)">修改</button>
+		        </div>
+		        <div class="cell3">
+		          <button onclick="action.cancel(<%=item.id%>)">取消</button>
+		        </div>
+		      <%}else{%>
+		        <div class="cell1"><%=item.name%></div>
+		        <div class="cell2">
+		          <img src="http://firekylin.my.baidu.com/doc/example/images/edit.gif" onclick="action.edit(<%=item.id%>)" />
+		        </div>
+		        <div class="cell3">
+		          <img src="http://firekylin.my.baidu.com/doc/example/images/delete.gif" onclick="action.del(<%=item.id%>)" />
+		        </div>
+		       <%}%>
+		    </div>
+		 <%}%>
+		</c:client>
+	</script>
+		<div id="wrap">
+			<div id="sort" class="down" onclick="action.sort(data.list, this.className=="up")"></div>
+			<div id="container"></div>
+			<div id="createDiv">
+				<input type="text" id="name" value="" />
+				<input type="button" value="添加一行新数据" onclick="action.create($('name').value);"/>
+			</div>
+		</div>
+	
+		<script type="text/javascript">
+		  //<![CDATA[
+		var data = {
+			"list" : [
+				{"id" : 1,"name" : "数据1"},
+				{"id" : 2,"name" : "数据2"},
+				{"id" : 3,"name" : "数据3"},
+				{"id" : 4,"name" : "数据4"},
+				{"id" : 5,"name" : "数据5"},
+				{"id" : 6,"name" : "数据6"},
+				{"id" : 7,"name" : "数据7"},
+				{"id" : 8,"name" : "数据8"},
+				{"id" : 9,"name" : "数据9"},
+				{"id" : 10,"name" : "数据10"}
+			]
+		}
+		var action = {
+		  sort:function(list, inc){
+		    $("sort").className = inc?"down":"up";
+		    list.sort(function(a, b){
+		      return (inc?1:-1)*a.name.localeCompare(b.name);
+		    });
+		    render(data);
+		  },
+		  create : function(name){
+		    data.list.unshift({id: +new Date(),name: name});
+		    render(data);
+		  },
+		  edit : function(id){
+		    each(data.list, function(value, i){
+		      data.list[i].state = value.id == id ? "edit" : "normal";
+		    });
+		    render(data);
+		  },
+		  del : function(id){
+		    each(data.list, function(value, i){
+		      if(value.id == id){
+		        data.list.splice(i,1);
+		      }
+		    })
+		    render(data);
+		  },
+		  save : function(id){
+		    each(data.list, function(value, i){
+		      if(value.id == id){
+		        value.name = $("g_" + id).value;
+		        value.state = "normal";
+		      }
+		    });
+		    render(data);
+		  },
+		  cancel : function(id){
+		    each(data.list, function(value, i){
+		      data.list[i].state = "normal";
+		    });
+		    render(data);
+		  }
+		}
+		function $(id){
+		  return document.getElementById(id);
+		}
+		function each(obj, fn){
+		  for (var i = 0; i < obj.length; i++) {
+		     fn.call(obj[i], obj[i], i); 
+		  }
+		}
+
+		var teamList = baidu.template('teamList');
+		function render(data){
+		  $("container").innerHTML = teamList(data);
+		}
+
+		window.onload = function(){
+			render(data);
+		}
+		//]]>
+		</script>
+</textarea>
 
 <script type="text/javascript" src="./js/jquery-1.8.2.js"></script>
 <script type="text/javascript" src="./tools/bootstrap/js/bootstrap.min.js"></script>
