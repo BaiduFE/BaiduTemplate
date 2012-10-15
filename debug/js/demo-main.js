@@ -11,7 +11,9 @@ var data0 = {
 	imports:"http://wangxiao.github.com/BaiduTemplate/debug/js/baiduTemplate.js"
 };
 
-data0.html = $('#data0').val();
+data0.html = $('#data0-html').val();
+data0.css = $('#data0-css').val();
+data0.js = $('#data0-js').val();
 
 //工具栏上按钮
 var tabs = $('#_tangram_debug_toolbar .switch_tab');
