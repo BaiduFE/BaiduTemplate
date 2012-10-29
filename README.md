@@ -11,7 +11,7 @@
 ###change log
 
 ###1.0.6：
-	重构代码，修改定义变量的bug
+	重构代码，修改定义变量的bug，增加对版本号的标注 baidu.template.versions
 
 ###1.0.5：
 	修改可能造成内存泄露的变量及方法直接挂在baidu.template命名空间下
