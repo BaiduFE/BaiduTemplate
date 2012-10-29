@@ -65,7 +65,79 @@
 
 <br>
 
-<h2>B、基本用法</h2>
+<h2>B、使用举例</h2>
+
+<pre><code data-language="javascript">//直接复制即可使用，记得要下载baiduTemplate.js
+//index.html
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"/&gt;
+&lt;title&gt;test&lt;/title&gt;
+
+&lt;!-- 引入baiduTemplate --&gt;
+&lt;script type="text/javascript" src="./baiduTemplate.js"&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id='result'&gt;&lt;/div&gt;
+
+&lt;!-- 模板1开始，可以使用script（type设置为text/html）来存放模板片段，并且用id标示 --&gt;
+&lt;script id="t:_1234-abcd-1" type="text/html"&gt;
+&lt;div&gt;
+    &lt;!-- 我是注释，语法均为Javascript原生语法，默认分割符为 &lt;% %&gt; ，也可以自定义，参见API部分 --&gt;
+    &lt;!-- 输出变量语句，输出title --&gt;
+    &lt;h1&gt;title:&lt;%=title%&gt;&lt;/h1&gt;
+    &lt;!-- 判断语句if else--&gt;
+    &lt;%if(list.length&gt;1) { %&gt;
+        &lt;h2&gt;输出list，共有&lt;%=list.length%&gt;个元素&lt;/h2&gt;
+        &lt;ul&gt;
+            &lt;!-- 循环语句 for--&gt;
+            &lt;%for(var i=0;i&lt;5;i++){%&gt;
+                &lt;li&gt;&lt;%=list[i]%&gt;&lt;/li&gt;
+            &lt;%}%&gt;
+        &lt;/ul&gt;
+    &lt;%}else{%&gt;
+        &lt;h2&gt;没有list数据&lt;/h2&gt;   
+    &lt;%}%&gt;
+&lt;/div&gt;  
+&lt;/script&gt;
+&lt;!-- 模板1结束 --&gt;
+
+&lt;!-- 使用模板 --&gt;
+&lt;script type="text/javascript"&gt;
+var data={
+    "title":'欢迎使用baiduTemplate',
+    "list":[
+        'test1:默认支持HTML转义，如输出&lt;script&gt;，也可以关掉，语法&lt;:=value&gt; 详见API',
+        'test2:',
+        'test3:',
+        'test4:list[5]未定义，模板系统会输出空'
+    ]
+};
+
+//使用baidu.template命名空间
+var bt=baidu.template;
+
+//可以设置分隔符
+//bt.LEFT_DELIMITER='&lt;!';
+//bt.RIGHT_DELIMITER='!&gt;';
+
+//可以设置输出变量是否自动HTML转义
+//bt.ESCAPE = false;
+
+//最简使用方法
+var html=bt('t:_1234-abcd-1',data);
+
+//渲染
+document.getElementById('result').innerHTML=html;
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2>C、基本用法</h2>
 
 <h3>0、引入文件：</h3>
 
@@ -233,78 +305,6 @@ baidu.template.RIGHT_DELIMITER='!&gt;';
 
 <pre><code data-language="javascript">//设置默认输出变量是否自动HTML转义，true自动转义，false不转义
 baidu.template.ESCAPE = false;
-</code></pre>
-
-<h2>C、使用举例</h2>
-
-<pre><code data-language="javascript">//直接复制即可使用，记得要下载baiduTemplate.js
-//index.html
-&lt;!doctype html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset="utf-8"/&gt;
-&lt;title&gt;test&lt;/title&gt;
-
-&lt;!-- 引入baiduTemplate --&gt;
-&lt;script type="text/javascript" src="./baiduTemplate.js"&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div id='result'&gt;&lt;/div&gt;
-
-&lt;!-- 模板1开始，可以使用script（type设置为text/html）来存放模板片段，并且用id标示 --&gt;
-&lt;script id="t:_1234-abcd-1" type="text/html"&gt;
-&lt;div&gt;
-    &lt;!-- 我是注释，语法均为Javascript原生语法，默认分割符为 &lt;% %&gt; ，也可以自定义，参见API部分 --&gt;
-    &lt;!-- 输出变量语句，输出title --&gt;
-    &lt;h1&gt;title:&lt;%=title%&gt;&lt;/h1&gt;
-    &lt;!-- 判断语句if else--&gt;
-    &lt;%if(list.length&gt;1) { %&gt;
-        &lt;h2&gt;输出list，共有&lt;%=list.length%&gt;个元素&lt;/h2&gt;
-        &lt;ul&gt;
-            &lt;!-- 循环语句 for--&gt;
-            &lt;%for(var i=0;i&lt;5;i++){%&gt;
-                &lt;li&gt;&lt;%=list[i]%&gt;&lt;/li&gt;
-            &lt;%}%&gt;
-        &lt;/ul&gt;
-    &lt;%}else{%&gt;
-        &lt;h2&gt;没有list数据&lt;/h2&gt;   
-    &lt;%}%&gt;
-&lt;/div&gt;  
-&lt;/script&gt;
-&lt;!-- 模板1结束 --&gt;
-
-&lt;!-- 使用模板 --&gt;
-&lt;script type="text/javascript"&gt;
-var data={
-    "title":'欢迎使用baiduTemplate',
-    "list":[
-        'test1:默认支持HTML转义，如输出&lt;script&gt;，也可以关掉，语法&lt;:=value&gt; 详见API',
-        'test2:',
-        'test3:',
-        'test4:list[5]未定义，模板系统会输出空'
-    ]
-};
-
-//使用baidu.template命名空间
-var bt=baidu.template;
-
-//可以设置分隔符
-//bt.LEFT_DELIMITER='&lt;!';
-//bt.RIGHT_DELIMITER='!&gt;';
-
-//可以设置输出变量是否自动HTML转义
-//bt.ESCAPE = false;
-
-//最简使用方法
-var html=bt('t:_1234-abcd-1',data);
-
-//渲染
-document.getElementById('result').innerHTML=html;
-&lt;/script&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
 </code></pre>
 
 <h2>D、性能相关数据</h2>
