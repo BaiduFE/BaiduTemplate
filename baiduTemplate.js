@@ -38,7 +38,7 @@
 
                 //textarea或input则取value，其它情况取innerHTML
                 var html = /^(textarea|input)$/i.test(element.nodeName) ? element.value : element.innerHTML;
-                return bt._compile(html);
+                return (bt.cache[str] = bt._compile(html));
 
             }else{
 
